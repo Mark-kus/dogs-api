@@ -14,16 +14,26 @@ module.exports = async (req, res) => {
         // Solo quiero los strings
         temps = temps.filter(element => typeof element === 'string')
 
-        // Uno los arrays en uno solo
+        // Uno los strings en uno solo
         const arrLength = temps.length;
         for (let i = 1; i < arrLength; i++) {
             temps[0] = temps[0] + ',' + temps[i];
         }
 
         // Separo cada temperamento en elementos
-        let arr = temps.map(string => string.split(','));
+        let arr = temps[0].split(',');
 
-        res.status(200).json(arr);
+        // Remuevo cualquier espacio vacío
+        temps = arr.map(string => string.trim());
+
+        // Meto todo en un Set, para eliminar los repetidos
+        const allTemps = new Set();
+        temps.forEach(temp => {
+            allTemps.add(temp);
+        });
+
+        // Lo envío como un array
+        res.status(200).json([...allTemps]);
     } catch (e) {
         console.log(e);
         res.status(400).json(e);
