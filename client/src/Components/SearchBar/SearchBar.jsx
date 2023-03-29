@@ -1,0 +1,1 @@
+// SearchBar: un input de búsqueda para encontrar razas de perros por nombre.
