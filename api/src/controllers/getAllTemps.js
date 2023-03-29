@@ -1,4 +1,5 @@
 const axios = require("axios");
+const { Temperament } = require("../db/db.js");
 
 const URL = 'https://api.thedogapi.com/v1/breeds';
 
@@ -32,8 +33,20 @@ module.exports = async (req, res) => {
             allTemps.add(temp);
         });
 
+        // Creo una instancia del modelo Temperament
+        allTemps.forEach(temp => {
+            const actualTemp = Temperament.findOrCreate({
+                where: {
+                    name: temp,
+                },
+                defaults: {
+                    name: temp,
+                }
+            })
+        });
+
         // Lo envío como un array
-        res.status(200).json([...allTemps]);
+        res.status(200).json(allTemps);
     } catch (e) {
         console.log(e);
         res.status(400).json(e);
