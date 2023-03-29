@@ -10,8 +10,8 @@ const dogRouter = Router();
 
 // Configuro el router '/dogs'
 dogRouter.get('/', getAllBreeds);
-dogRouter.get('/:idRaza', getBreedId);
 dogRouter.get('/name', getBreedName);
+dogRouter.get('/:idRaza', getBreedId);
 dogRouter.post('/', createDog);
 
 module.exports = dogRouter;

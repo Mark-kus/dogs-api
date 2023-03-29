@@ -2,7 +2,7 @@
 const { expect } = require('chai');
 const session = require('supertest-session');
 const app = require('../../src/app.js');
-const { Dog, conn } = require('../../src/db.js');
+const { Dog, conn } = require('../../src/db/db.js');
 
 const agent = session(app);
 const dog = {

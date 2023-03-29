@@ -7,3 +7,5 @@ const temperRouter = Router();
 
 // Configuro el router '/temper'
 temperRouter.get('/', getAllTemps);
+
+module.exports = temperRouter;
