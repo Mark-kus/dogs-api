@@ -1,11 +1,9 @@
 import axios from 'axios';
+import { CREATE_DOG } from '../../types';
 
-export const CREATE_DOG = 'CREATE_DOG';
-
-export const createDog = (dogData) => {
+export default (dogData) => {
     return async (dispatch) => {
-        const response = axios.post('http://localhost:3001/dogs',
-        {});
+        const response = await axios.post('http://localhost:3001/dogs', { dogData });
 
         return dispatch({
             type: CREATE_DOG,
