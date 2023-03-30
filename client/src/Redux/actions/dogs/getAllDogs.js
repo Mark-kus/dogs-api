@@ -1,8 +1,7 @@
 import axios from 'axios';
+import { GET_ALL_DOGS } from '../../types';
 
-export const GET_ALL_DOGS = "GET_ALL_DOGS";
-
-export const getAllDogs = () => {
+export default () => {
     return async (dispatch) => {
         const response = await axios('http://localhost:3001/dogs');
 
