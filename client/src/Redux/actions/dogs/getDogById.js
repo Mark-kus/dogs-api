@@ -1,8 +1,7 @@
 import axios from 'axios';
+import { GET_DOG_BY_ID } from '../../types';
 
-export const GET_DOG_BY_ID = 'GET_DOG_BY_ID';
-
-export const getDogById = (id) => {
+export default (id) => {
     return async (dispatch) => {
         const response = await axios(`http://lcoalhost:3001/dogs/${id}`)
 
