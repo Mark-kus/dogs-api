@@ -1,11 +1,23 @@
 import './App.css';
 
-function App() {
+import Navbar from './Components/Navbar/Navbar.jsx';
+import Landing from './Components/Landing/Landing.jsx';
+import Footer from './Components/Footer/Footer.jsx';
+import Wraper from './Components/Wraper/Wraper';
+
+import { Routes, Route } from 'react-router-dom';
+
+export default function App() {
   return (
-    <div className="App">
-      <h1>Henry Dogs</h1>
+    <div className="app">
+      <Navbar />
+
+      <Routes>
+        <Route path='/' element={<Landing />} />
+        <Route path='/dogs' element={<Wraper />} />
+      </Routes>
+
+      <Footer />
     </div>
   );
 }
-
-export default App;
