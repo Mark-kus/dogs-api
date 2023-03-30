@@ -3,6 +3,7 @@
 
 export default function Landing() {
     return (
-        <h1>Soy un landing</h1>
+        <>
+        </>
     )
 }

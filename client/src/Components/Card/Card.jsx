@@ -10,3 +10,17 @@
 // Botones/Opciones para ordenar tanto ascendentemente como descendentemente las razas de perros por orden alfabético y por peso.
 // Paginado: el listado de razas de perros se hará por partes.
 // Tu SPA debe contar con un paginado que muestre un total de 8 perros por página.
+
+export default function Card () {
+    return (
+        <article>
+            <header>
+
+            </header>
+
+            <div>
+                
+            </div>
+        </article>
+    )
+}
