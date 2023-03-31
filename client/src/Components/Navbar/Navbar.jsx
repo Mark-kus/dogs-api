@@ -1,4 +1,3 @@
-
 import Searchbar from '../Searchbar/Searchbar.jsx';
 import styles from './Navbar.module.css';
 
