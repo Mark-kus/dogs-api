@@ -5,3 +5,15 @@ nav {
     align-items: center;
     justify-content: space-around;
 }
+
+.title {
+    color: #f2f0ee;
+    text-decoration: none;
+    font-size: xx-large;
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+}
+
+.links {
+    color: #f2f0ee;
+    text-decoration: none;
+}

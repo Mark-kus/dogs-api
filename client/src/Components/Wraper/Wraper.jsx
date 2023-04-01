@@ -1,17 +1,11 @@
 import styles from './Wraper.module.css';
-import getAllDogs from '../../Redux/actions/dogs/getAllDogs.js'
 
 import Card from '../Card/Card';
 
-import { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useState } from 'react';
+import { useSelector } from 'react-redux';
 
 export default function Wraper() {
-    const dispatch = useDispatch();
-
-    useEffect(() => {
-        dispatch(getAllDogs());
-    }, []);
     const allDogs = useSelector(state => state.allDogs);
 
     // Paginación

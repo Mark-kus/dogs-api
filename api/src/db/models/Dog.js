@@ -21,7 +21,7 @@ module.exports = (sequelize) => {
     },
     weight: {
       type: DataTypes.FLOAT,
-    },
+    },  
     lifespan: {
       type: DataTypes.INTEGER,
     },

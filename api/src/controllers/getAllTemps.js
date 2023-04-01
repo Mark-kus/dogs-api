@@ -9,10 +9,10 @@ module.exports = async (req, res) => {
         // Traigo todas las razas
         const response = await axios(URL);
 
-        // Guardo los string de temperamento de cada raza en un array
+        // Guardo los string de temperamentos de cada raza en un array
         let temps = response.data.map(breed => breed.temperament);
 
-        // Solo quiero los strings
+        // Quito todo lo que no sea un string
         temps = temps.filter(element => typeof element === 'string')
 
         // Uno los strings en uno solo
@@ -27,26 +27,27 @@ module.exports = async (req, res) => {
         // Remuevo cualquier espacio vacío
         temps = arr.map(string => string.trim());
 
-        // Meto todo en un Set, para eliminar los repetidos
+        // Paso todo por un Set, para eliminar los repetidos
         const allTemps = new Set();
         temps.forEach(temp => {
             allTemps.add(temp);
         });
+        temps = [...allTemps]
 
-        // Creo una instancia del modelo Temperament
-        allTemps.forEach(temp => {
-            const actualTemp = Temperament.findOrCreate({
-                where: {
-                    name: temp,
-                },
-                defaults: {
-                    name: temp,
-                }
-            })
-        });
+        // Creo una instancia del modelo Temperament por cada uno
+        // temps.forEach(temp => {
+        //     const actualTemp = Temperament.findOrCreate({
+        //         where: {
+        //             name: temp,
+        //         },
+        //         defaults: {
+        //             name: temp,
+        //         }
+        //     })
+        // });
 
         // Lo envío como un array
-        res.status(200).json(allTemps);
+        res.status(200).json(temps);
     } catch (e) {
         console.log(e);
         res.status(400).json(e);
