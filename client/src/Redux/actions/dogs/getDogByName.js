@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { GET_DOG_BY_NAME } from '../../types';
 
-export default (name) => {
+const getDogByName = (name) => {
     return async (dispatch) => {
         const response = await axios(`http//:localhost:3001/dogs/name?name=${name}`);
 
@@ -11,3 +11,5 @@ export default (name) => {
         });
     }
 }
+
+export default getDogByName;

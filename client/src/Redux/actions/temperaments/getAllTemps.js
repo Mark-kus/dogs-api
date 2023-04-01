@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { GET_ALL_TEMPS } from '../../types';
 
-export default () => {
+const getAllTemps = () => {
     return async (dispatch) => {
         const response = await axios('http://localhost:3001/temperaments');
 
@@ -11,3 +11,5 @@ export default () => {
         })
     }
 }
+
+export default getAllTemps;
