@@ -1,6 +1,16 @@
-section {
+.container section {
     display: flex;
     justify-content: center;
     
     flex-wrap: wrap;
+}
+
+.container div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.container div button {
+    height: 20px;
 }
