@@ -12,6 +12,7 @@ import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import getAllDogs from './Redux/actions/dogs/getAllDogs';
 import getAllTemps from './Redux/actions/temperaments/getAllTemps';
+import getDogById from './Redux/actions/dogs/getDogById';
 
 export default function App() {
   const dispatch = useDispatch();
@@ -22,6 +23,11 @@ export default function App() {
     dispatch(getAllTemps());
     dispatch(getAllDogs());
   }, [dispatch]);
+
+  if (pathname.includes('/dogs/')) {
+    const id = pathname.slice(6);
+    dispatch(getDogById(id));
+  }
 
   return (
     <div className="app">

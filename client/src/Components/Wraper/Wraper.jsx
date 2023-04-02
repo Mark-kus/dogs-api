@@ -20,6 +20,7 @@ export default function Wraper() {
     const prevHandler = () => {
         const prevPage = currentPage - 1;
         if (currentPage === 1) return;
+        setLoad(false)
         setShownDogs([...allDogs].splice((prevPage - 1) * itemsPerPage, itemsPerPage));
         setCurrentPage(prevPage);
     }
@@ -27,6 +28,7 @@ export default function Wraper() {
     const nextHandler = () => {
         const firstIndex = (currentPage + 1) * itemsPerPage;
         if (firstIndex > dogsQty) return;
+        setLoad(false)
         setShownDogs([...allDogs].splice(firstIndex, itemsPerPage));
         setCurrentPage(currentPage + 1);
     }
@@ -34,7 +36,7 @@ export default function Wraper() {
 
     setTimeout(() => {
         setLoad(true);
-    }, 600);
+    }, 1000);
 
     return (
         <div className={styles.container}>
