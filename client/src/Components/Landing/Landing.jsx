@@ -1,11 +1,11 @@
 import styles from './Landing.module.css';
 
-import { NavLink } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 export default function Landing() {
     return (
         <>
-        <NavLink to='/dogs'>Go see dogs</NavLink>
+        <Link className={styles.link} to='/dogs'>Go see dogs</Link>
         </>
     )
 }
