@@ -1,14 +1,17 @@
 import styles from './Wraper.module.css';
 
 import Card from '../Card/Card';
+import Loader from '../Loader/Loader.jsx';
 
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
 
 export default function Wraper() {
     const allDogs = useSelector(state => state.allDogs);
+    const [load, setLoad] = useState(false);
 
     // Paginación
+    // Todavía se pierde una página
     const itemsPerPage = 8;
     const dogsQty = allDogs.length;
     const [currentPage, setCurrentPage] = useState(1);
@@ -29,20 +32,26 @@ export default function Wraper() {
     }
     // Fin de paginación
 
+    setTimeout(() => {
+        setLoad(true);
+    }, 600);
+
     return (
         <div className={styles.container}>
 
-            <section>
-                {shownDogs.map(dog => <Card
-                    key={dog.id}
-                    dog={dog} />)}
+            {load ? <>
+                <section>
+                    {shownDogs.map(dog => <Card
+                        key={dog.id}
+                        dog={dog} />)}
 
-            </section>
-            <div>
-                <button onClick={prevHandler}>Prev</button>
-                <h4>Página {currentPage}</h4>
-                <button onClick={nextHandler}>Next</button>
-            </div>
+                </section>
+                <div>
+                    <button onClick={prevHandler}>Prev</button>
+                    <h4>Página {currentPage}</h4>
+                    <button onClick={nextHandler}>Next</button>
+                </div>
+            </> : <Loader />}
 
         </div>
     )
