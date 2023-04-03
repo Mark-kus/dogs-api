@@ -11,18 +11,18 @@ import { Link } from 'react-router-dom';
 export default function Card({ dog }) {
     return (
         <article>
-            <header>
-                {dog.name}
-            </header>
-
             <Link to={`/dogs/${dog.id}`}>
                 <img src={dog.image.url} className={styles.dogExample} alt={`${dog.name} example`} />
             </Link>
 
+            <h3>
+                {dog.name}
+            </h3>
+
             <div>
-                Temperament: {dog.temperament}
+                {dog.temperament}
                 <br />
-                {dog.weight.metric} Kilograms
+                {dog.weight.metric} kg / {dog.weight.imperial} lb
             </div>
         </article>
     )
