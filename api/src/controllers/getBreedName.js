@@ -1,7 +1,8 @@
 const axios = require("axios");
 const { Dog } = require('../db/db.js');
 
-const URL = 'https://api.thedogapi.com/v1/breeds/search?q=';
+const URLByName = 'https://api.thedogapi.com/v1/breeds/search?q=';
+const URLAll = 'https://api.thedogapi.com/v1/breeds';
 
 // (No es necesario que sea una coincidencia exacta).
 // Debe poder buscarlo independientemente de mayúsculas o minúsculas.
@@ -11,13 +12,19 @@ const URL = 'https://api.thedogapi.com/v1/breeds/search?q=';
 module.exports = async (req, res) => {
     // Extraigo el nombre de la raza que me piden
     const { q } = req.query;
-
     try {
-        // Busco la raza que me piden en la API
-        let response = await axios(URL + q);
+        let response;
+        if (q) {
+            // Busco la raza que me piden en la API
+            response = await axios(URLByName + q);
 
-        // Si no la encontró, la busco en la db
-        if (!response) response = await Dog.findOne({ where: { name: q } });
+            // Si no la encontró, la busco en la db
+            if (!response) response = await Dog.findAll({ where: { name: q } });
+        }
+        else {
+            // Al no pasar un nombre, se buscan todos los perros
+            response = await axios(URLAll);
+        }
         res.status(200).json(response.data);
     } catch (e) {
         console.log(e);
