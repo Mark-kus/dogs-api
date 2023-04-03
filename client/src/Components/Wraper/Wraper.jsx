@@ -42,6 +42,11 @@ export default function Wraper() {
         <div className={styles.container}>
 
             {load ? <>
+                <div>
+                    <button onClick={prevHandler}>Prev</button>
+                    <h4>Página {currentPage}</h4>
+                    <button onClick={nextHandler}>Next</button>
+                </div>
                 <section>
                     {shownDogs.map(dog => <Card
                         key={dog.id}

@@ -1,7 +1,15 @@
-article {
-    width: 15%;
-}
-
 .dogExample {
     width: 100%;
+}
+
+@media screen and (min-width: 500px) {
+    article {
+        flex: 0 1 49%
+    }
+}
+
+@media screen and (min-width: 900px) {
+    article {
+        flex: 0 1 24%; /* flex-grow 0, flex-shrink 1, width 24% for 25% of screen and a little of space, default: 0 1 auto */
+    }
 }
