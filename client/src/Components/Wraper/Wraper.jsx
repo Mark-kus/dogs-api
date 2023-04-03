@@ -43,9 +43,9 @@ export default function Wraper() {
 
             {load ? <>
                 <div>
-                    <button onClick={prevHandler}>Prev</button>
+                    <button onClick={prevHandler}>&laquo;</button>
                     <h4>Página {currentPage}</h4>
-                    <button onClick={nextHandler}>Next</button>
+                    <button onClick={nextHandler}>&raquo;</button>
                 </div>
                 <section>
                     {shownDogs.map(dog => <Card
@@ -54,9 +54,9 @@ export default function Wraper() {
 
                 </section>
                 <div>
-                    <button onClick={prevHandler}>Prev</button>
+                    <button onClick={prevHandler}>&laquo;</button>
                     <h4>Página {currentPage}</h4>
-                    <button onClick={nextHandler}>Next</button>
+                    <button onClick={nextHandler}>&raquo;</button>
                 </div>
             </> : <Loader />}
 

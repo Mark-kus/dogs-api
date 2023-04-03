@@ -12,5 +12,12 @@
 }
 
 .container div button {
-    height: 20px;
+    color: #f2f0ee;
+    background: none;
+    border: none;
+    transition: background 300ms ease;
+}
+
+.container div button:hover {
+    background-color: #964125;
 }
