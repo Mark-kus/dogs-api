@@ -15,7 +15,7 @@ export default function Searchbar() {
 
     return (
         <div>
-            <label className={styles.searchLabel} htmlFor="raceName">Race name</label>
+            <label className={styles.searchLabel} htmlFor="raceName">Race name </label>
             <input autoComplete='off' onChange={searchHandler} id="raceName" type="text" name="raceName" />
         </div>
     )

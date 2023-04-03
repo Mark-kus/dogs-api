@@ -20,7 +20,7 @@ export default function Card({ dog }) {
             </h3>
 
             <div>
-                {dog.temperament}
+                {dog.temperament ? dog.temperament : 'These dog has no temperament assigned'}
                 <br />
                 {dog.weight.metric} kg / {dog.weight.imperial} lb
             </div>
