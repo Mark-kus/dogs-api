@@ -6,6 +6,11 @@ article {
 
 .dogExample {
     width: 100%;
+    transition: scale 500ms ease;
+}
+
+.dogExample:hover {
+    scale: 1.02;
 }
 
 /* Previous styles are for desktop size, next ones for phones and ipads */
