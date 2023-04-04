@@ -32,15 +32,14 @@ export default function App() {
   return (
     <div className="app">
       {pathname !== '/' ? <Navbar /> : ''}
-
       <Routes>
         <Route path='/dogs' element={<Wraper />} />
         <Route path='/dogs/:id' element={<Detail />} />
         <Route path='/new' element={<Form />} />
         <Route path='/' element={<Landing />} />
       </Routes>
+      {pathname !== '/' ? <Footer /> : ''}
 
-      <Footer />
     </div>
   );
 }
