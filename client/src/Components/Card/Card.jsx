@@ -12,7 +12,7 @@ export default function Card({ dog }) {
     return (
         <article>
             <Link to={`/dogs/${dog.id}`}>
-                <img src={dog.image.url} className={styles.dogExample} alt={`${dog.name} example`} />
+                <img src={dog.image?.url} className={styles.dogExample} alt={`${dog.name} example`} />
             </Link>
 
             <h3>
