@@ -2,21 +2,53 @@
 import styles from './Searchbar.module.css';
 
 import { useDispatch, useSelector } from 'react-redux';
+import { useState } from 'react';
+import { Link } from 'react-router-dom';
 
 import getDogByName from '../../Redux/actions/dogs/getDogByName';
 
 export default function Searchbar() {
     const dispatch = useDispatch();
-    const { allDogs } = useSelector(state => state);
+    const { searchDogs } = useSelector(state => state);
+    let shownList = [...searchDogs].splice(0, 8);
+    const [input, setInput] = useState('');
 
     const searchHandler = (e) => {
-        dispatch(getDogByName(e.target.value))
+        setInput(e.target.value);
+        dispatch(getDogByName(e.target.value));
+        shownList = [...searchDogs].splice(0, 8);
+    }
+
+    const selectHandler = (e) => {
+        setInput('');
     }
 
     return (
-        <div>
-            <label className={styles.searchLabel} htmlFor="raceName">Race name </label>
-            <input autoComplete='off' onChange={searchHandler} id="raceName" type="text" name="raceName" />
-        </div>
+        <div className={styles.searchbar}>
+            <input
+                value={input}
+                placeholder='Search for breed'
+                autoComplete='off'
+                onChange={searchHandler}
+                id="raceName"
+                type="text"
+                name="raceName"
+                aria-autocomplete='both'
+                aria-label='Search for breed'
+            />
+            <ul role='listbox'
+                className={input ? '' : styles.hidden}
+                aria-label='Search for breed'>
+                {shownList.map(dog => <Link
+                    key={dog.id}
+                    className={styles.link}
+                    to={`/dogs/${dog.id}`}
+                    role='option'
+                    onClick={selectHandler}
+                >
+                    {dog.name}
+                </Link>)}
+            </ul>
+        </div >
     )
 }
