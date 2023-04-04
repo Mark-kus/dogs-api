@@ -1,3 +1,19 @@
 footer {
+    display: flex;
+    justify-content: space-between;
+
     background-color: var(--light-green);
+}
+
+footer h4 {
+    margin: 16px;
+}
+
+footer div {
+    display: flex;
+    align-items: center;
+}
+
+footer img {
+    width: 80%;
 }
