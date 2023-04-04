@@ -1,3 +1,39 @@
-.dogBigExample {
-    width: 20%;
+/* Width distribution */
+
+.widthDist {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.widthDist img {
+    width: 40%;
+}
+
+.widthDist .data {
+    width: 40%;
+    background-color: #6f2b15;
+}
+
+.widthDist .dogName, .widthDist h5 {
+    line-height: 0;
+}
+
+.widthDist .topData {
+    display: flex;
+    justify-content: space-evenly;
+
+    margin: 8px;
+}
+
+/* Height distribution */
+
+.heightDist {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.heightDist img {
+    width: 30%;
 }

@@ -1,5 +1,5 @@
 article {
-    background-color: #5b2d21;
+    background-color: var(--darker-brown);
     margin: 8px 0;
     padding-bottom: 16px;
 }
@@ -13,7 +13,7 @@ article {
     scale: 1.02;
 }
 
-/* Previous styles are for desktop size, next ones for phones and ipads */
+/* Previous styles are for phone size, next ones for ipads and desktops */
 @media screen and (min-width: 500px) {
     article {
         flex: 0 1 49%

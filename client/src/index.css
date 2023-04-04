@@ -1,6 +1,6 @@
 body {
-  background-color: #97533d;
-  color: #f2f0ee;
+  background-color: var(--light-brown);
+  color: var(--white-text);
   text-align: center;
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
@@ -13,4 +13,13 @@ body {
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+:root {
+  --white-text: #f2f0ee;
+  --black-text: #000;
+  --light-brown: #97533d;
+  --light-green: #a5b462;
+  --dark-brown: #6f2b15;
+  --darker-brown: #5b2d21;
 }
