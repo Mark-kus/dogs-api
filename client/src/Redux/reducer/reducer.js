@@ -6,6 +6,7 @@ const initialState = {
     allTemps: [],
     createdDogs: [],
     detailDog: {},
+    searchDogs: [],
 }
 
 // Seteamos el reducer
@@ -32,7 +33,7 @@ export default function reducer(state = initialState, action) {
         case GET_DOG_BY_NAME:
             return {
                 ...state,
-                allDogs: action.payload,
+                searchDogs: action.payload,
             };
 
         case CREATE_DOG:
