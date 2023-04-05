@@ -7,6 +7,11 @@ import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 
 import App from './App';
+import axios from 'axios';
+
+// Todas nuestras peticiones van a empezar con este link (local o deploy)
+axios.defaults.baseURL = "http://localhost:3001";
+// axios.defaults.baseURL = "";
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
