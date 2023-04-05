@@ -44,7 +44,7 @@ export default function Wraper() {
         <div className={styles.container}>
 
             {load ? <>
-                <div>
+                <div className={styles.orderFilter}>
                     <Order />
                     <div className={styles.pagination}>
                         <button onClick={prevHandler}>&laquo;</button>

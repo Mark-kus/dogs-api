@@ -11,6 +11,15 @@
     align-items: center;
 }
 
+.orderFilter {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+/* .orderFilter select {
+} */
+
 .pagination button {
     color: #f2f0ee;
     background: none;
