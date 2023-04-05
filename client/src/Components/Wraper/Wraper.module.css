@@ -5,19 +5,19 @@
     flex-wrap: wrap;
 }
 
-.container div {
+.pagination {
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
-.container div button {
+.pagination button {
     color: #f2f0ee;
     background: none;
     border: none;
     transition: background 300ms ease;
 }
 
-.container div button:hover {
+.pagination button:hover {
     background-color: #964125;
 }

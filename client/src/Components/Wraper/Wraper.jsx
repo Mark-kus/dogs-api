@@ -2,6 +2,8 @@ import styles from './Wraper.module.css';
 
 import Card from '../Card/Card';
 import Loader from '../Loader/Loader.jsx';
+import Filter from '../OrderFilter/Filter.jsx';
+import Order from '../OrderFilter/Order.jsx';
 
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
@@ -43,9 +45,13 @@ export default function Wraper() {
 
             {load ? <>
                 <div>
-                    <button onClick={prevHandler}>&laquo;</button>
-                    <h4>Página {currentPage}</h4>
-                    <button onClick={nextHandler}>&raquo;</button>
+                    <Order />
+                    <div className={styles.pagination}>
+                        <button onClick={prevHandler}>&laquo;</button>
+                        <h4>Página {currentPage}</h4>
+                        <button onClick={nextHandler}>&raquo;</button>
+                    </div>
+                    <Filter />
                 </div>
                 <section>
                     {shownDogs.map(dog => <Card
@@ -53,13 +59,14 @@ export default function Wraper() {
                         dog={dog} />)}
 
                 </section>
-                <div>
+                <div className={styles.pagination}>
                     <button onClick={prevHandler}>&laquo;</button>
                     <h4>Página {currentPage}</h4>
                     <button onClick={nextHandler}>&raquo;</button>
                 </div>
-            </> : <Loader />}
+            </> : <Loader />
+            }
 
-        </div>
+        </div >
     )
 }
