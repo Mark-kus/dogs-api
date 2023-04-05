@@ -23,6 +23,16 @@
 }
 
 .container input, .container select {
+    box-sizing: border-box;
     width: 100%;
     border-radius: 8px;
+    padding: 8px;
+}
+
+.container button {
+    border-radius: 8px;
+    border: solid 1px black;
+    background-color: #3a6f96;
+    padding: 8px;
+    width: 100%;
 }

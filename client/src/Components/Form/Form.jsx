@@ -1,8 +1,7 @@
-// Este formulario debe ser controlado completamente con JavaScritp.
-// Posibilidad de seleccionar/agregar varios temperamentos en simultáneo.
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
+
 import styles from './Form.module.css';
 
 import validate from './validate.js';
@@ -38,9 +37,28 @@ export default function Form() {
         }));
     }
 
+    const temperHandler = (e) => {
+        const { value } = e.target;
+        // Si ya existe el temperamento, no hace nada
+        if (inputs.temperaments.includes(value)) return;
+        // Si no, lo pasa a inputs y errors
+        setInputs({
+            ...inputs,
+            // Temperaments, es el valor ingresado, más los 4 primeros temps ya seleccionados
+            temperaments: [value + " ", ...inputs.temperaments.splice(0, 5)],
+        });
+        setErrors(
+            validate({
+                ...inputs,
+                temperaments: [value + " ", ...inputs.temperaments.splice(0, 5)],
+            })
+        );
+    }
+
     const submitHandler = (e) => {
         e.preventDefault();
         dispatch(createDog(inputs));
+        navigate("/dogs");
     }
 
     return (
@@ -48,7 +66,7 @@ export default function Form() {
             <div className={styles.container}>
                 <h1>Create Dog</h1>
 
-                <input placeholder='Name' onChange={changeHandler} type="text" id='name' />
+                <input placeholder='Name' onChange={changeHandler} name='name' type="text" id='name' />
                 <p>{errors?.name}</p>
 
                 <div className={styles.numeralInputs}>
@@ -71,7 +89,8 @@ export default function Form() {
                     <p>{errors?.minLifespan || errors?.maxLifespan}</p>
                 </div>
 
-                <select name="temperaments" id="temperaments">
+                <select onChange={temperHandler}  name="temperaments" id="temperaments">
+                    <option value='' hidden>Select up to 5 temperaments</option>
                     {allTemps.map((temper, i) => {
                         return <option key={i} value={temper}>{temper}</option>
                     })}
