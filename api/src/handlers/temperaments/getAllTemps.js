@@ -1,5 +1,5 @@
 const axios = require("axios");
-const { Temperament } = require("../db/db.js");
+const { Temperament } = require("../../db/db.js");
 
 const URL = 'https://api.thedogapi.com/v1/breeds';
 

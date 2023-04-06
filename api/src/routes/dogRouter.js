@@ -1,17 +1,17 @@
 const { Router } = require('express');
 
 // Traigo los controladores
-const getAllBreeds = require('../handlers/getAllBreeds');
-const getBreedId = require('../handlers/getBreedId.js');
-const getBreedName = require('../handlers/getBreedName');
-const createDog = require('../handlers/createDog');
+const getAllDogs = require('../handlers/dogs/getAllDogs');
+const getDogId = require('../handlers/dogs/getDogId.js');
+const getDogName = require('../handlers/dogs/getDogName');
+const createDog = require('../handlers/dogs/createDog');
 
 const dogRouter = Router();
 
 // Configuro el router '/dogs'
-dogRouter.get('/', getAllBreeds);
-dogRouter.get('/name', getBreedName);
-dogRouter.get('/:idRaza', getBreedId);
+dogRouter.get('/', getAllDogs);
+dogRouter.get('/name', getDogName);
+dogRouter.get('/:id', getDogId);
 dogRouter.post('/', createDog);
 
 module.exports = dogRouter;
