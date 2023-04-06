@@ -1,7 +1,7 @@
 const { Router } = require('express');
 
 // Traigo los controladores
-const getAllTemps = require('../controllers/getAllTemps');
+const getAllTemps = require('../handlers/getAllTemps');
 
 const temperRouter = Router();
 

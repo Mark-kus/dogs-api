@@ -1,10 +1,10 @@
 const { Router } = require('express');
 
 // Traigo los controladores
-const getAllBreeds = require('../controllers/getAllBreeds');
-const getBreedId = require('../controllers/getBreedId.js');
-const getBreedName = require('../controllers/getBreedName');
-const createDog = require('../controllers/createDog');
+const getAllBreeds = require('../handlers/getAllBreeds');
+const getBreedId = require('../handlers/getBreedId.js');
+const getBreedName = require('../handlers/getBreedName');
+const createDog = require('../handlers/createDog');
 
 const dogRouter = Router();
 
