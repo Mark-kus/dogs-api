@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import Loader from '../Loader/Loader';
 import styles from './Detail.module.css';
 
@@ -6,15 +7,15 @@ import { Link } from 'react-router-dom';
 
 export default function Detail() {
     const { detailDog } = useSelector(state => state);
+    const [load, setLoad] = useState(false);
 
-    const distSelector = (width, height) => {
-        // if (width > height) return styles.widthDist;
-        // if (width < height) return styles.heightDist;
-    }
+    setTimeout(() => {
+        setLoad(true);
+    }, 1000)
 
     return (
         <>
-            {detailDog ? <section className={styles.detail}>
+            {load ? <section className={styles.detail}>
                 <Link to="/dogs" className={styles.backButton}> 🢀 Back </Link>
 
                 <img src={detailDog.image} className={styles.dogBigExample} alt={`${detailDog.name} example`} />
