@@ -1,4 +1,4 @@
-const { Dog, Temperament } = require('../../db/models/Dog');
+const { Dog, Temperament } = require('../../db/db');
 const cleanArrayAPI = require('../../helpers/cleanArrayAPI');
 const axios = require('axios');
 
