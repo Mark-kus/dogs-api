@@ -1,6 +1,6 @@
 const axios = require("axios");
 const cleanArrayName = require("../../helpers/cleanArrayName.js");
-const { Dog, Op } = require('../../../db/db.js');
+const { Dog, Op } = require('../../db/db.js');
 
 module.exports = async (name) => {
     // Busco la raza en la base de datos

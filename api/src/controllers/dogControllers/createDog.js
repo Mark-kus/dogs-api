@@ -1,4 +1,4 @@
-const { Dog, Temperament } = require('../../../db/db.js');
+const { Dog, Temperament } = require('../../db/db.js');
 
 module.exports = async (name, image, height, weight, lifespan, temperament) => {
     const newDog = await Dog.create({
