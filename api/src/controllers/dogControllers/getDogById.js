@@ -5,13 +5,19 @@ const cleanArrayAPI = require('../../helpers/cleanArrayAPI.js');
 module.exports = async (id, source) => {
     const dog =
         source === "api" ?
+
             cleanArrayAPI((await axios('https://api.thedogapi.com/v1/breeds')).data)
+
             : await Dog.findByPk(id, {
                 include: {
                     model: Temperament,
                     attributes: ["name"],
                 }
             });
+
+    if (source === 'api') {
+        return dog.filter(dog => dog.id === Number(id));
+    }
 
     return dog;
 }
