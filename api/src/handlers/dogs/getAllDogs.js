@@ -1,14 +1,10 @@
-const axios = require('axios');
+const getDogs = require('../../controllers/dogControllers/getDogs');
 
-const URL = 'https://api.thedogapi.com/v1/breeds';
-
-// Traigo todas las razas del endpoint
 module.exports = async (req, res) => {
     try {
-        const response = await axios(URL);
-        res.status(200).json(response.data);
+        const allDogs = await getDogs();
+        res.status(200).json(allDogs);
     } catch (e) {
-        console.log(e);
-        res.status(400).json({ msg: "Ocurrió un error inesperado" });
+        res.status(400).json({ error: e.message });
     }
 }

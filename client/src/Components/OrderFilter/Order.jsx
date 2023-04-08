@@ -1,19 +1,20 @@
 import { useDispatch } from "react-redux"
 
-// import orderDogs from '../../Redux/actions/dogs/orderDogs.js';
+import orderDogs from '../../Redux/actions/dogs/orderDogs.js';
 
-export default function Order () {
+export default function Order ({reorder}) {
     const dispatch = useDispatch();
 
     const orderHandler = (e) => {
-        // dispatch(orderDogs(e.target.value));
+        dispatch(orderDogs(e.target.value));
+        reorder();
     }
 
     return (
         <>
         <select onChange={orderHandler} name="order" id="order">
-            <option  value="Ascendente">Ascendente</option>
-            <option  value="Descendente">Descendente</option>
+            <option  value="Ascendente">A-Z</option>
+            <option  value="Descendente">Z-A</option>
             {/* por peso también */}
         </select>
         </>

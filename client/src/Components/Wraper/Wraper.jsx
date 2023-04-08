@@ -36,6 +36,10 @@ export default function Wraper() {
     }
     // Fin de paginación
 
+    const reorder = () => {
+        setShownDogs([...allDogs].splice(currentPage * itemsPerPage, itemsPerPage));
+    }
+
     setTimeout(() => {
         setLoad(true);
     }, 1000);
@@ -45,7 +49,7 @@ export default function Wraper() {
 
             {load ? <>
                 <div className={styles.orderFilter}>
-                    <Order />
+                    <Order reorder={reorder} />
                     <div className={styles.pagination}>
                         <button onClick={prevHandler}>&laquo;</button>
                         <h4>Página {currentPage}</h4>

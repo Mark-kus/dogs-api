@@ -1,4 +1,4 @@
-import { GET_ALL_DOGS, GET_ALL_TEMPS, GET_DOG_BY_ID, GET_DOG_BY_NAME, CREATE_DOG } from '../types';
+import { GET_ALL_DOGS, GET_ALL_TEMPS, GET_DOG_BY_ID, GET_DOG_BY_NAME, CREATE_DOG, ORDER_DOGS, FILTER_DOGS } from '../types';
 
 // Seteamos el estado inicial del reducer
 const initialState = {
@@ -41,6 +41,25 @@ export default function reducer(state = initialState, action) {
                 ...state,
                 createdDogs: action.payload,
             };
+
+        case ORDER_DOGS:
+            let orderedDogs = [...state.allDogs];
+            if (action.payload === "Ascendente") {
+                orderedDogs.sort((a, b) => a.name.localeCompare(b.name));
+            }
+            else if (action.payload === "Descendente") {
+                orderedDogs.sort((a, b) => b.name.localeCompare(a.name));
+            }
+            return {
+                ...state,
+                allDogs: orderedDogs,
+            }
+
+        case FILTER_DOGS:
+            return {
+                ...state,
+
+            }
 
         default:
             return state;
