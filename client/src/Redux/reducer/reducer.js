@@ -53,13 +53,13 @@ export default function reducer(state = initialState, action) {
             return {
                 ...state,
                 allDogs: orderedDogs,
-            }
+            };
 
         case FILTER_DOGS:
             return {
                 ...state,
 
-            }
+            };
 
         default:
             return state;
