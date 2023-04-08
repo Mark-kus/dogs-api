@@ -12,7 +12,7 @@ export default function Card({ dog }) {
     return (
         <article>
             <Link to={`/dogs/${dog.id}`}>
-                <img src={dog.image?.url} className={styles.dogExample} alt={`${dog.name} example`} />
+                <img src={dog.image} className={styles.dogExample} alt={`${dog.name} example`} />
             </Link>
 
             <h3>
@@ -22,7 +22,7 @@ export default function Card({ dog }) {
             <div>
                 {dog.temperament ? dog.temperament : 'These dog has no temperament assigned'}
                 <br />
-                {dog.weight.metric} kg / {dog.weight.imperial} lb
+                {dog.weight} kg
             </div>
         </article>
     )

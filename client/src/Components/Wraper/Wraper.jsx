@@ -10,7 +10,7 @@ import { useSelector } from 'react-redux';
 
 export default function Wraper() {
     const allDogs = useSelector(state => state.allDogs);
-    const [load, setLoad] = useState(false);
+    // const [load, setLoad] = useState(false);
 
     // Paginación
     // Todavía se pierde una página
@@ -40,14 +40,14 @@ export default function Wraper() {
         setShownDogs([...allDogs].splice(currentPage * itemsPerPage, itemsPerPage));
     }
 
-    setTimeout(() => {
-        setLoad(true);
-    }, 1000);
+    // setTimeout(() => {
+    //     setLoad(true);
+    // }, 1000);
 
     return (
         <div className={styles.container}>
 
-            {load ? <>
+            {shownDogs ? <>
                 <div className={styles.orderFilter}>
                     <Order reorder={reorder} />
                     <div className={styles.pagination}>

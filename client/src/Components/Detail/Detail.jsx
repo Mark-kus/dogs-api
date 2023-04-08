@@ -3,44 +3,46 @@ import styles from './Detail.module.css';
 
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
 
 export default function Detail() {
-    const [load, setLoad] = useState(false);
+    // const [load, setLoad] = useState(false);
     const { detailDog } = useSelector(state => state);
 
-    setTimeout(() => {
-        setLoad(true);
-    }, 1000);
+    // setTimeout(() => {
+    //     setLoad(true);
+    // }, 1000);
 
     const distSelector = (width, height) => {
+        return
         if (width > height) return styles.widthDist;
         if (width < height) return styles.heightDist;
     }
 
     return (
         <>
-            {load ? <section className={distSelector(detailDog.image.width, detailDog.image.height)}>
-                <img src={detailDog.image.url} className={styles.dogBigExample} alt={`${detailDog.name} example`} />
+            {detailDog ? <section className={distSelector(detailDog.image, detailDog.image)}>
+                <Link to="/dogs"> 🢀 Back </Link>
+
+                <img src={detailDog.image} className={styles.dogBigExample} alt={`${detailDog.name} example`} />
 
                 <div className={styles.data}>
 
                     <div className={styles.topData}>
                         <div>
                             Height
-                            <h5>{detailDog.height.imperial} ft</h5>
-                            <h5>{detailDog.height.metric} cm</h5>
+                            <h5>{detailDog.height} cm</h5>
                         </div>
 
                         <div className={styles.dogName}>
                             <h1>{detailDog.name}</h1>
                             <h6>{detailDog.id}</h6>
-                            <h4>Life span: {detailDog.life_span}</h4>
+                            <h4>Life span: {detailDog.lifespan}</h4>
                         </div>
 
                         <div>
                             Weight
-                            <h5>{detailDog.weight.imperial} lb</h5>
-                            <h5>{detailDog.weight.metric} kg</h5>
+                            <h5>{detailDog.weight} kg</h5>
                         </div>
                     </div>
 
