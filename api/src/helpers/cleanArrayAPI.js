@@ -5,7 +5,7 @@ module.exports = (array) =>
             height: elem.height.metric,
             id: elem.id,
             name: elem.name,
-            lifespan: elem.lifespan,
+            lifespan: elem.life_span,
             image: elem.image.url,
             created: false,
         }
