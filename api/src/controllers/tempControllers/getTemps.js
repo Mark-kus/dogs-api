@@ -6,7 +6,7 @@ module.exports = async () => {
     const temperamentsRaw = response.map(dog => dog.temperament);
 
     // Quito todo lo que no sea un string y los uno
-    const temperaments = temperamentsRaw.filter(element => typeof element === 'string')
+    let temperaments = temperamentsRaw.filter(element => typeof element === 'string')
     const arrLength = temperaments.length;
     for (let i = 1; i < arrLength; i++) {
         temperaments[0] = temperaments[0] + ',' + temperaments[i];

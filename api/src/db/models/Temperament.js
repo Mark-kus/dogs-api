@@ -1,7 +1,7 @@
 const { DataTypes } = require('sequelize');
 
 module.exports = (sequelize) => {
-
+    // defino el modelo
     sequelize.define('temperament', {
         id: {
             type: DataTypes.UUID,
@@ -10,7 +10,11 @@ module.exports = (sequelize) => {
         },
         name: {
             type: DataTypes.STRING,
-            // allowNull: false,
+            allowNull: false,
+            unique: true,
         },
-    });
+    },
+        {
+            timestamps: false,
+        });
 };

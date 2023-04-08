@@ -5,10 +5,10 @@ module.exports = (sequelize) => {
   // defino el modelo
   sequelize.define('dog', {
     weight: {
-        type: DataTypes.STRING,
+      type: DataTypes.STRING,
     },
     height: {
-        type: DataTypes.STRING,
+      type: DataTypes.STRING,
     },
     id: {
       type: DataTypes.UUID,
@@ -24,8 +24,8 @@ module.exports = (sequelize) => {
       // allowNull: false,
     },
     image: {
-        type: DataTypes.TEXT,
-        unique: true,
+      type: DataTypes.TEXT,
+      unique: true,
     },
     created: {
       type: DataTypes.BOOLEAN,
