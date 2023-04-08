@@ -1,39 +1,39 @@
-/* Width distribution */
-
-.widthDist {
+.detail {
+    align-self: center;
+    width: 40%;
     display: flex;
     flex-direction: column;
-    align-items: center;
 }
 
-.widthDist img {
-    width: 40%;
+.detail img {
+    width: 100%;
 }
 
-.widthDist .data {
-    width: 40%;
-    background-color: #6f2b15;
+.detail .data {
+    background-color: var(--dark-brown);
 }
 
-.widthDist .dogName, .widthDist h5 {
+.detail .dogName, .detail h5 {
     line-height: 0;
 }
 
-.widthDist .topData {
+.detail .topData {
     display: flex;
     justify-content: space-evenly;
 
     margin: 8px;
 }
 
-/* Height distribution */
+.backButton {
+    box-sizing: border-box;
+    width: 100%;
+    background-color: var(--dark-brown);
 
-.heightDist {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    text-decoration: none;
+    color: var(--white-text);
+    transition: background 200ms ease;
 }
 
-.heightDist img {
-    width: 30%;
+.backButton:hover {
+    background-color: #963515;
 }

@@ -15,14 +15,14 @@ export default function Detail() {
     return (
         <>
             {detailDog ? <section className={styles.detail}>
-                <Link to="/dogs"> 🢀 Back </Link>
+                <Link to="/dogs" className={styles.backButton}> 🢀 Back </Link>
 
                 <img src={detailDog.image} className={styles.dogBigExample} alt={`${detailDog.name} example`} />
 
                 <div className={styles.data}>
 
                     <div className={styles.topData}>
-                        <div>   
+                        <div>
                             Height
                             <h5>{detailDog.height} cm</h5>
                         </div>
