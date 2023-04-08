@@ -7,6 +7,7 @@ module.exports = (array) =>
             name: elem.name,
             lifespan: elem.life_span,
             image: elem.image.url,
+            temperament: elem.temperament,
             created: false,
         }
     });
