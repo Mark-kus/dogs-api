@@ -1,5 +1,6 @@
 const createDog = require('../../controllers/dogControllers/createDog');
 
+
 module.exports = async (req, res) => {
     const { name, image, height, weight, lifespan, temperament } = req.body;
 

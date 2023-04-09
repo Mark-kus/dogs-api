@@ -1,5 +1,5 @@
 const axios = require('axios');
-const { Dog, Temperament, DogTemp } = require('../../db/db.js');
+const { Dog, Temperament } = require('../../db/db.js');
 const cleanArrayAPI = require('../../helpers/cleanArrayAPI.js');
 const cleanArrayDB = require('../../helpers/cleanArrayDB.js');
 

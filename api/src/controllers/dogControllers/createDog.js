@@ -11,14 +11,18 @@ module.exports = async (name, image, height, weight, lifespan, temperament) => {
     await temperament.map(async (temp) => {
         const searchTemp = temp.trim();
         const temper = await Temperament.findOne({ where: { name: searchTemp } });
-        newDog.addTemperament(temper);
-    })
+        await newDog.addTemperament(temper);
+    });
 
+    const returnedTemps = temperament.map(temp => temp.trim()).join(', ');
     return {
-        weigth: newDog.weigth,
-        heigth: newDog.heigth,
-        lifespan: newDog.lifespan,
-        name: newDog.name,
-        id: newDog.id,
+        weight: weight,
+        height: height,
+        name: name,
+        lifespan: lifespan,
+        image: image,
+        temperament: returnedTemps,
+        id: newDog.dataValues.id,
+        created: true,
     };
 }

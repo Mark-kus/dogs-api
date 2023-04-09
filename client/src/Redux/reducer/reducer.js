@@ -13,9 +13,11 @@ const initialState = {
 export default function reducer(state = initialState, action) {
     switch (action.type) {
         case GET_ALL_DOGS:
+            const created = action.payload.filter(dog => dog.created);
             return {
                 ...state,
                 allDogs: action.payload,
+                createdDogs: created,
             };
 
         case GET_ALL_TEMPS:
@@ -37,9 +39,14 @@ export default function reducer(state = initialState, action) {
             };
 
         case CREATE_DOG:
+            const addDogCreated = [...state.createdDogs];
+            const addDogAll = [...state.allDogs];
+            addDogAll.push(action.payload);
+            addDogCreated.push(action.payload);
             return {
                 ...state,
-                createdDogs: action.payload,
+                createdDogs: addDogCreated,
+                allDogs: addDogAll,
             };
 
         case ORDER_DOGS:
