@@ -9,38 +9,43 @@ import { useState } from 'react';
 import { useSelector } from 'react-redux';
 
 export default function Wraper() {
-    const allDogs = useSelector(state => state.allDogs);
+    const modDogs = useSelector(state => state.modDogs);
 
     // Inicio de Paginación
     const itemsPerPage = 8;
-    const dogsQty = allDogs.length;
+    const dogsQty = modDogs.length;
     const [currentPage, setCurrentPage] = useState(1);
-    const [shownDogs, setShownDogs] = useState([...allDogs].splice(0, itemsPerPage));
+    const [shownDogs, setShownDogs] = useState([...modDogs].splice(0, itemsPerPage));
+    const [load, setLoad] = useState(false);
 
     const prevHandler = () => {
         if (currentPage === 1) return;
         const prevPage = currentPage - 1;
-        setShownDogs([...allDogs].splice((prevPage - 1) * itemsPerPage, itemsPerPage));
+        setShownDogs([...modDogs].splice((prevPage - 1) * itemsPerPage, itemsPerPage));
         setCurrentPage(prevPage);
     }
 
     const nextHandler = () => {
         const firstIndex = currentPage * itemsPerPage;
-        if (firstIndex > dogsQty) return;
-        setShownDogs([...allDogs].splice(firstIndex, itemsPerPage));
+        if (firstIndex >= dogsQty) return;
+        setShownDogs([...modDogs].splice(firstIndex, itemsPerPage));
         setCurrentPage(currentPage + 1);
     }
     // Fin de paginación
 
     // Re-renderiza cuando cambia el ordenado
     const reorder = () => {
-        setShownDogs([...allDogs].splice(currentPage * itemsPerPage, itemsPerPage));
+        setShownDogs([...modDogs].splice(0, itemsPerPage));
+        setCurrentPage(1);
+        setLoad(false);
     }
+
+    if (!load) setTimeout(() => { setLoad(true) }, 2000)
 
     return (
         <div className={styles.container}>
 
-            {shownDogs ? <>
+            <>
                 <div className={styles.orderFilter}>
                     <Order reorder={reorder} />
                     <div className={styles.pagination}>
@@ -48,21 +53,20 @@ export default function Wraper() {
                         <h4>Página {currentPage}</h4>
                         <button onClick={nextHandler}>&raquo;</button>
                     </div>
-                    <Filter />
+                    <Filter reorder={reorder} />
                 </div>
-                <section>
+                {false ? <section>
                     {shownDogs.map(dog => <Card
                         key={dog.id}
                         dog={dog} />)}
 
-                </section>
+                </section> : <Loader />}
                 <div className={styles.pagination}>
                     <button onClick={prevHandler}>&laquo;</button>
                     <h4>Página {currentPage}</h4>
                     <button onClick={nextHandler}>&raquo;</button>
                 </div>
-            </> : <Loader />
-            }
+            </> 
 
         </div >
     )

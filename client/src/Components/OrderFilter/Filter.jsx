@@ -2,12 +2,13 @@ import { useDispatch, useSelector } from "react-redux";
 
 import filterDogs from '../../Redux/actions/dogs/filterDogs';
 
-export default function Filter() {
+export default function Filter({ reorder }) {
     const dispatch = useDispatch();
     const { allTemps } = useSelector(state => state);
 
     const filterHandler = (e) => {
         dispatch(filterDogs(e.target.value));
+        reorder();
     }
 
     return (

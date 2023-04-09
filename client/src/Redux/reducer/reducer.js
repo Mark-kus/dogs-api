@@ -3,6 +3,7 @@ import { GET_ALL_DOGS, GET_ALL_TEMPS, GET_DOG_BY_ID, GET_DOG_BY_NAME, CREATE_DOG
 // Seteamos el estado inicial del reducer
 const initialState = {
     allDogs: [],
+    modDogs: [],
     allTemps: [],
     createdDogs: [],
     detailDog: {},
@@ -17,6 +18,7 @@ export default function reducer(state = initialState, action) {
             return {
                 ...state,
                 allDogs: action.payload,
+                modDogs: action.payload,
                 createdDogs: created,
             };
 
@@ -47,6 +49,7 @@ export default function reducer(state = initialState, action) {
                 ...state,
                 createdDogs: addDogCreated,
                 allDogs: addDogAll,
+                modDogs: addDogAll,
             };
 
         case ORDER_DOGS:
@@ -59,13 +62,18 @@ export default function reducer(state = initialState, action) {
             }
             return {
                 ...state,
-                allDogs: orderedDogs,
+                modDogs: orderedDogs,
             };
 
         case FILTER_DOGS:
+            const filteredDogs = state.allDogs.filter(dog => {
+                if (typeof dog.temperament === 'string') {
+                    return dog.temperament.includes(action.payload);
+                }
+            });
             return {
                 ...state,
-
+                modDogs: filteredDogs,
             };
 
         default:
