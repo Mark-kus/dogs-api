@@ -11,28 +11,28 @@ import { useSelector } from 'react-redux';
 export default function Wraper() {
     const allDogs = useSelector(state => state.allDogs);
 
-    // Paginación
-    // Todavía se pierde una página
+    // Inicio de Paginación
     const itemsPerPage = 8;
     const dogsQty = allDogs.length;
     const [currentPage, setCurrentPage] = useState(1);
     const [shownDogs, setShownDogs] = useState([...allDogs].splice(0, itemsPerPage));
 
     const prevHandler = () => {
-        const prevPage = currentPage - 1;
         if (currentPage === 1) return;
+        const prevPage = currentPage - 1;
         setShownDogs([...allDogs].splice((prevPage - 1) * itemsPerPage, itemsPerPage));
         setCurrentPage(prevPage);
     }
 
     const nextHandler = () => {
-        const firstIndex = (currentPage + 1) * itemsPerPage;
+        const firstIndex = currentPage * itemsPerPage;
         if (firstIndex > dogsQty) return;
         setShownDogs([...allDogs].splice(firstIndex, itemsPerPage));
         setCurrentPage(currentPage + 1);
     }
     // Fin de paginación
 
+    // Re-renderiza cuando cambia el ordenado
     const reorder = () => {
         setShownDogs([...allDogs].splice(currentPage * itemsPerPage, itemsPerPage));
     }
