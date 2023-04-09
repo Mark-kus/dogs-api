@@ -1,7 +1,7 @@
 .container section {
     display: flex;
     justify-content: space-around;
-    
+
     flex-wrap: wrap;
 }
 
@@ -17,8 +17,9 @@
     align-items: center;
 }
 
-/* .orderFilter select {
-} */
+.orderFilter select {
+    width: 120px;
+}
 
 .pagination button {
     color: #f2f0ee;
