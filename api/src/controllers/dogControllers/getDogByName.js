@@ -7,7 +7,7 @@ module.exports = async (name) => {
     const dbDogsRaw = await Dog.findAll({
         where: {
             name: {
-                [Op.like]: `%${name}%`,
+                [Op.iLike]: `%${name}%`,
             }
         }
     })
