@@ -6,9 +6,11 @@ module.exports = (sequelize) => {
   sequelize.define('dog', {
     weight: {
       type: DataTypes.STRING,
+      allowNull: false,
     },
     height: {
       type: DataTypes.STRING,
+      allowNull: false,
     },
     id: {
       type: DataTypes.UUID,
@@ -17,15 +19,14 @@ module.exports = (sequelize) => {
     },
     name: {
       type: DataTypes.STRING,
-      // allowNull: false,
+      allowNull: false,
     },
     lifespan: {
       type: DataTypes.STRING,
-      // allowNull: false,
+      allowNull: false,
     },
     image: {
       type: DataTypes.TEXT,
-      unique: true,
     },
     created: {
       type: DataTypes.BOOLEAN,
