@@ -11,7 +11,7 @@ import axios from 'axios';
 
 // Todas nuestras peticiones van a empezar con este link (local o deploy)
 axios.defaults.baseURL = "http://localhost:3001";
-// axios.defaults.baseURL = "";
+// axios.defaults.baseURL = "https://dogapi-backend-production.up.railway.app/";
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
