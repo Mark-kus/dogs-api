@@ -14,8 +14,7 @@ const validate = (inputs) => {
     if (name) {
         if (name.length > 20) errors.name = "The name's length must be less than 20 characters";
         if (name.length < 2) errors.name = "The name's length must be greater than 2 characters";
-        if (false) errors.name = "The name's length must be greater than 2 characters";
-        // falta verificar que no incluya numeros ni caracteres especiales
+        if (!/^[a-zA-ZñÑáéíóúÁÉÍÓÚüÜ\s]+$/i.test(name)) errors.name = "The name shouldn't contain any numbers or special characters";
     }
 
     // A pesar de qué el input es de tipo "Number", prefiero verificarlo una vez más
@@ -25,7 +24,7 @@ const validate = (inputs) => {
         if (isNaN(Number(maxWeight))) errors.maxWeight = "The maximum weight must be a number";
     }
     if (minWeight && maxWeight) {
-        if (Number(minWeight) > Number(maxWeight)) errors.minWeight = "The minimum Weight must be greater than the maximum";
+        if (Number(minWeight) > Number(maxWeight)) errors.minWeight = "The maximum Weight must be greater than the minimum";
     }
 
 
@@ -35,7 +34,7 @@ const validate = (inputs) => {
         if (isNaN(Number(maxHeight))) errors.maxHeight = "The maximum height must be a number";
     }
     if (minHeight && maxHeight) {
-        if (Number(minHeight) > Number(maxHeight)) errors.minHeight = "The minimum height must be greater than the maximum";
+        if (Number(minHeight) > Number(maxHeight)) errors.minHeight = "The maximum height must be greater than the minimum";
     }
 
 
@@ -45,7 +44,7 @@ const validate = (inputs) => {
         if (isNaN(Number(maxLifespan))) errors.maxLifespan = "The maximum life span must be a number";
     }
     if (minLifespan && maxLifespan) {
-        if (Number(minLifespan) > Number(maxLifespan)) errors.minLifespan = "The minimum lifespan must be greater than the maximum";
+        if (Number(minLifespan) > Number(maxLifespan)) errors.minLifespan = "The maximum lifespan must be greater than the minimum";
     }
 
     return errors;
