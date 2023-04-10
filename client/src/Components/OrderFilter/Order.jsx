@@ -11,12 +11,12 @@ export default function Order ({reorder}) {
     }
 
     return (
-        <>
+        <div>
         <select onChange={orderHandler} name="order" id="order">
             <option  value="Ascendente">A-Z</option>
             <option  value="Descendente">Z-A</option>
             {/* por peso también */}
         </select>
-        </>
+        </div>
     )
 }

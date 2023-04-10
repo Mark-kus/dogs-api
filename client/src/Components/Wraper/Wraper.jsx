@@ -1,46 +1,41 @@
 import styles from './Wraper.module.css';
 
 import Card from '../Card/Card';
-import Loader from '../Loader/Loader.jsx';
 import Filter from '../OrderFilter/Filter.jsx';
 import Order from '../OrderFilter/Order.jsx';
+import pagination from '../../Redux/actions/dogs/pagination';
 
-import { useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 export default function Wraper() {
-    const modDogs = useSelector(state => state.modDogs);
+    const {filteredDogs, currentPage} = useSelector(state => state);
+    const dispatch = useDispatch();
 
     // Inicio de Paginación
     const itemsPerPage = 8;
-    const dogsQty = modDogs.length;
-    const [currentPage, setCurrentPage] = useState(1);
-    const [shownDogs, setShownDogs] = useState([...modDogs].splice(0, itemsPerPage));
-    const [load, setLoad] = useState(false);
+    const dogsQty = filteredDogs.length;
+    [...filteredDogs].splice(0, itemsPerPage);
 
     const prevHandler = () => {
         if (currentPage === 1) return;
+        dispatch(pagination('prev'));
         const prevPage = currentPage - 1;
-        setShownDogs([...modDogs].splice((prevPage - 1) * itemsPerPage, itemsPerPage));
-        setCurrentPage(prevPage);
+        setShownDogs([...filteredDogs].splice((prevPage - 1) * itemsPerPage, itemsPerPage));
     }
 
     const nextHandler = () => {
         const firstIndex = currentPage * itemsPerPage;
         if (firstIndex >= dogsQty) return;
-        setShownDogs([...modDogs].splice(firstIndex, itemsPerPage));
-        setCurrentPage(currentPage + 1);
+        dispatch(pagination('next'));
+        setShownDogs([...filteredDogs].splice(firstIndex, itemsPerPage));
     }
     // Fin de paginación
 
     // Re-renderiza cuando cambia el ordenado
     const reorder = () => {
-        setShownDogs([...modDogs].splice(0, itemsPerPage));
-        setCurrentPage(1);
-        setLoad(false);
+        setShownDogs([...filteredDogs].splice(0, itemsPerPage));
+        dispatch(pagination('reset'));
     }
-
-    if (!load) setTimeout(() => { setLoad(true) }, 2000)
 
     return (
         <div className={styles.container}>
@@ -55,18 +50,17 @@ export default function Wraper() {
                     </div>
                     <Filter reorder={reorder} />
                 </div>
-                {false ? <section>
-                    {shownDogs.map(dog => <Card
+                <section>
+                    {filteredDogs?.map(dog => <Card
                         key={dog.id}
                         dog={dog} />)}
-
-                </section> : <Loader />}
+                </section>
                 <div className={styles.pagination}>
                     <button onClick={prevHandler}>&laquo;</button>
                     <h4>Página {currentPage}</h4>
                     <button onClick={nextHandler}>&raquo;</button>
                 </div>
-            </> 
+            </>
 
         </div >
     )

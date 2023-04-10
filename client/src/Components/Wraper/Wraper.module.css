@@ -17,7 +17,7 @@
     align-items: center;
 }
 
-.orderFilter select {
+.orderFilter div {
     width: 120px;
 }
 

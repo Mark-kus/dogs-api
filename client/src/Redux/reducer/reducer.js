@@ -1,13 +1,24 @@
-import { GET_ALL_DOGS, GET_ALL_TEMPS, GET_DOG_BY_ID, GET_DOG_BY_NAME, CREATE_DOG, ORDER_DOGS, FILTER_DOGS } from '../types';
+import {
+    GET_ALL_DOGS,
+    GET_ALL_TEMPS,
+    GET_DOG_BY_ID,
+    GET_DOG_BY_NAME,
+    CREATE_DOG,
+    ORDER_DOGS,
+    FILTER_DOGS,
+    PAGINATION
+} from '../types';
 
 // Seteamos el estado inicial del reducer
 const initialState = {
     allDogs: [],
-    modDogs: [],
+    orderedDogs: [],
+    filteredDogs: [],
     allTemps: [],
     createdDogs: [],
     detailDog: {},
     searchDogs: [],
+    currentPage: 1,
 }
 
 // Seteamos el reducer
@@ -18,7 +29,8 @@ export default function reducer(state = initialState, action) {
             return {
                 ...state,
                 allDogs: action.payload,
-                modDogs: action.payload,
+                filteredDogs: action.payload,
+                orderedDogs: action.payload,
                 createdDogs: created,
             };
 
@@ -49,11 +61,13 @@ export default function reducer(state = initialState, action) {
                 ...state,
                 createdDogs: addDogCreated,
                 allDogs: addDogAll,
-                modDogs: addDogAll,
             };
 
         case ORDER_DOGS:
-            let orderedDogs = [...state.allDogs];
+            let orderedDogs =
+                state.filteredDogs.length
+                    ? [...filteredDogs]
+                    : [...state.allDogs];
             if (action.payload === "Ascendente") {
                 orderedDogs.sort((a, b) => a.name.localeCompare(b.name));
             }
@@ -62,19 +76,47 @@ export default function reducer(state = initialState, action) {
             }
             return {
                 ...state,
-                modDogs: orderedDogs,
+                filteredDogs: orderedDogs,
             };
 
         case FILTER_DOGS:
-            const filteredDogs = state.allDogs.filter(dog => {
-                if (typeof dog.temperament === 'string') {
-                    return dog.temperament.includes(action.payload);
+            let filteredDogs;
+
+            if (action.payload.created === false) {
+                if (action.payload.filter !== 'Show all') {
+                    filteredDogs = state.allDogs.filter(dog => {
+                        if (typeof dog.temperament === 'string') {
+                            return dog.temperament.includes(action.payload.filter);
+                        }
+                    });
                 }
-            });
+                else {
+                    filteredDogs = [...state.allDogs];
+                }
+
+            } else {
+                if (action.payload.filter !== 'Show all') {
+                    filteredDogs = state.createdDogs.filter(dog => {
+                        if (typeof dog.temperament === 'string') {
+                            return dog.temperament.includes(action.payload.filter);
+                        }
+                    });
+                }
+                else {
+                    filteredDogs = [...state.createdDogs];
+                }
+
+            }
             return {
                 ...state,
-                modDogs: filteredDogs,
+                filteredDogs: filteredDogs,
             };
+
+        case PAGINATION:
+            return {
+                ...state,
+                
+            }
 
         default:
             return state;
