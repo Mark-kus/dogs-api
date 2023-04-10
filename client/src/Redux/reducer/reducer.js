@@ -27,7 +27,7 @@ const initialState = {
 export default function reducer(state = initialState, action) {
     switch (action.type) {
         case GET_ALL_DOGS:
-            const created = action.payload.filter(dog => dog.created);
+            const createdDogs = action.payload.filter(dog => dog.created);
             const dogsPayload = [...action.payload];
             const dog = action.payload.splice(0, state.itemsPerPage);
             return {
@@ -36,7 +36,7 @@ export default function reducer(state = initialState, action) {
                 filteredDogs: dogsPayload,
                 orderedDogs: dogsPayload,
                 shownDogs: dog,
-                createdDogs: created,
+                createdDogs: createdDogs,
                 dogsQty: state.filteredDogs.length,
             };
 
@@ -71,15 +71,38 @@ export default function reducer(state = initialState, action) {
             };
 
         case FILTER_DOGS:
+            const { filter, created } = action.payload;
             let updatedDogs;
-            console.log(action.payload);
-            if (action.payload === 'Show all') {
-                updatedDogs = state.allDogs
+
+            // Si created es false, mostrar creados y no creados
+            if (!created) {
+                // Si filter es "show all" o "rerender", mostrar todos
+                if (filter === 'Show all' || filter === "rerender") {
+                    updatedDogs = state.allDogs;
+                }
+                // Si filter es cualquier otra cosa, mostrar todos los que incluyan el filtro
+                else {
+                    updatedDogs = [...state.allDogs].filter(dog => {
+                        if (typeof dog.temperament === 'string') return dog.temperament.includes(filter);
+                    })
+                }
             }
+            // Si created no es false, mostrar creados
             else {
-                updatedDogs = [...state.allDogs].filter(dog => {
-                    if (typeof dog.temperament === 'string') return dog.temperament.includes(action.payload);
-                })
+                // Si filter es "show all", mostrar todos los creados
+                if (filter === 'Show all') {
+                    updatedDogs = state.createdDogs;
+                }
+                // Si filter es "rerender" mostrar el filtro actual solo con los creados
+                else if (filter === 'rerender') {
+                    updatedDogs = state.filteredDogs.filter(dog => dog.created)
+                }
+                // Si filter es cualquier otra cosa, mostrar los creados que incluyan el filtro
+                else {
+                    updatedDogs = [...state.createdDogs].filter(dog => {
+                        if (typeof dog.temperament === 'string') return dog.temperament.includes(filter);
+                    })
+                }
             }
 
             return {

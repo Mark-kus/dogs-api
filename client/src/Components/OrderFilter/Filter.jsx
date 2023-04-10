@@ -6,21 +6,21 @@ import filterDogs from '../../Redux/actions/dogs/filterDogs';
 export default function Filter() {
     const dispatch = useDispatch();
     const { allTemps } = useSelector(state => state);
+    const [created, setCreated] = useState(false)
 
-    const reorder = () => {
-        // dispatch(pagination('reset'));
-        // dogsQty = shownDogs.length;
+    const createdHandler = () => {
+        setCreated(!created);
+        dispatch(filterDogs('rerender', !created));
     }
 
     const filterHandler = (e) => {
-        console.dir(e.target);
-        dispatch(filterDogs(e.target.value))
+        dispatch(filterDogs(e.target.value, created))
     }
 
     return (
         <div>
             <label htmlFor="NoCreated">Only created</label>
-            <input onChange={filterHandler} type="checkbox" name="NoCreated" id="NoCreated" />
+            <input onChange={createdHandler} type="checkbox" id="NoCreated" />
             <select onChange={filterHandler} name="filter" id="filter">
                 <option value="Show all">Show all</option>
                 {allTemps?.map((temp, i) => (
