@@ -22,24 +22,18 @@ export default function Wraper() {
         if (currentPage * itemsPerPage >= dogsQty) return;
         dispatch(pagination('next'));
     }
-
-    // Vuelve a la pagina 1
-    const reorder = () => {
-        dispatch(pagination('reset'));
-        dogsQty = shownDogs.length;
-    }
     
     return (
         <div className={styles.container}>
             <>
                 <div className={styles.orderFilter}>
-                    <Order reorder={reorder} />
+                    <Order />
                     <div className={styles.pagination}>
                         <button onClick={prevHandler}>&laquo;</button>
                         <h4>Página {currentPage}</h4>
                         <button onClick={nextHandler}>&raquo;</button>
                     </div>
-                    <Filter reorder={reorder} />
+                    <Filter />
                 </div>
                 <section>
                     {shownDogs?.map(dog => <Card
