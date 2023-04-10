@@ -8,38 +8,29 @@ import pagination from '../../Redux/actions/dogs/pagination';
 import { useDispatch, useSelector } from 'react-redux';
 
 export default function Wraper() {
-    const {filteredDogs, currentPage} = useSelector(state => state);
+    const { shownDogs, currentPage, itemsPerPage, dogsQty } = useSelector(state => state);
     const dispatch = useDispatch();
 
-    // Inicio de Paginación
-    const itemsPerPage = 8;
-    const dogsQty = filteredDogs.length;
-    [...filteredDogs].splice(0, itemsPerPage);
-
+    // Página anterior
     const prevHandler = () => {
         if (currentPage === 1) return;
         dispatch(pagination('prev'));
-        const prevPage = currentPage - 1;
-        setShownDogs([...filteredDogs].splice((prevPage - 1) * itemsPerPage, itemsPerPage));
     }
 
+    // Página siguiente
     const nextHandler = () => {
-        const firstIndex = currentPage * itemsPerPage;
-        if (firstIndex >= dogsQty) return;
+        if (currentPage * itemsPerPage >= dogsQty) return;
         dispatch(pagination('next'));
-        setShownDogs([...filteredDogs].splice(firstIndex, itemsPerPage));
     }
-    // Fin de paginación
 
-    // Re-renderiza cuando cambia el ordenado
+    // Vuelve a la pagina 1
     const reorder = () => {
-        setShownDogs([...filteredDogs].splice(0, itemsPerPage));
         dispatch(pagination('reset'));
+        dogsQty = shownDogs.length;
     }
-
+    
     return (
         <div className={styles.container}>
-
             <>
                 <div className={styles.orderFilter}>
                     <Order reorder={reorder} />
@@ -51,7 +42,7 @@ export default function Wraper() {
                     <Filter reorder={reorder} />
                 </div>
                 <section>
-                    {filteredDogs?.map(dog => <Card
+                    {shownDogs?.map(dog => <Card
                         key={dog.id}
                         dog={dog} />)}
                 </section>

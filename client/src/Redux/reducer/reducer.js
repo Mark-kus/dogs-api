@@ -14,11 +14,14 @@ const initialState = {
     allDogs: [],
     orderedDogs: [],
     filteredDogs: [],
+    shownDogs: [],
     allTemps: [],
     createdDogs: [],
     detailDog: {},
     searchDogs: [],
     currentPage: 1,
+    itemsPerPage: 8,
+    dogsQty: 0,
 }
 
 // Seteamos el reducer
@@ -26,12 +29,16 @@ export default function reducer(state = initialState, action) {
     switch (action.type) {
         case GET_ALL_DOGS:
             const created = action.payload.filter(dog => dog.created);
+            const dogsPayload = [...action.payload];
+            const dog = action.payload.splice(0, state.itemsPerPage);
             return {
                 ...state,
-                allDogs: action.payload,
-                filteredDogs: action.payload,
-                orderedDogs: action.payload,
+                allDogs: dogsPayload,
+                filteredDogs: dogsPayload,
+                orderedDogs: dogsPayload,
+                shownDogs: dog,
                 createdDogs: created,
+                dogsQty: state.filteredDogs.length,
             };
 
         case GET_ALL_TEMPS:
@@ -113,9 +120,28 @@ export default function reducer(state = initialState, action) {
             };
 
         case PAGINATION:
+            let page;
+            let dogs;
+
+            // If next page
+            if (action.payload === 'next') {
+                page = state.currentPage + 1;
+                dogs = [...state.filteredDogs].splice(state.currentPage * state.itemsPerPage, state.itemsPerPage);
+            }
+
+            // If previous page
+            if (action.payload === 'prev') {
+                page = state.currentPage - 1;
+                dogs = [...state.filteredDogs].splice((page - 1) * state.itemsPerPage, state.itemsPerPage);
+            }
+
+            // Al filtrar, vuelve a la página 1
+            if (action.payload === 'reset') { }
+
             return {
                 ...state,
-                
+                currentPage: page,
+                shownDogs: dogs,
             }
 
         default:
