@@ -1,4 +1,4 @@
-import {ORDER_DOGS} from '../../types.js';
+import { ORDER_DOGS } from '../../types.js';
 
 const orderDogs = (order) => {
     return {
