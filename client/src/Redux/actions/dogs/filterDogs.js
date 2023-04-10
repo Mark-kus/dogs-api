@@ -1,9 +1,9 @@
 import { FILTER_DOGS } from "../../types";
 
-const filterDogs = (filter, created) => {
+const filterDogs = (filter) => {
     return {
         type: FILTER_DOGS,
-        payload: { filter, created },
+        payload: filter,
     }
 }
 

@@ -12,7 +12,6 @@ import {
 // Seteamos el estado inicial del reducer
 const initialState = {
     allDogs: [],
-    orderedDogs: [],
     filteredDogs: [],
     shownDogs: [],
     allTemps: [],
@@ -42,9 +41,10 @@ export default function reducer(state = initialState, action) {
             };
 
         case GET_ALL_TEMPS:
+            const orderedTemps = action.payload.sort((a, b) => a.localeCompare(b));
             return {
                 ...state,
-                allTemps: action.payload,
+                allTemps: orderedTemps,
             };
 
         case GET_DOG_BY_ID:
@@ -70,53 +70,24 @@ export default function reducer(state = initialState, action) {
                 allDogs: addDogAll,
             };
 
-        case ORDER_DOGS:
-            let orderedDogs =
-                state.filteredDogs.length
-                    ? [...filteredDogs]
-                    : [...state.allDogs];
-            if (action.payload === "Ascendente") {
-                orderedDogs.sort((a, b) => a.name.localeCompare(b.name));
-            }
-            else if (action.payload === "Descendente") {
-                orderedDogs.sort((a, b) => b.name.localeCompare(a.name));
-            }
-            return {
-                ...state,
-                filteredDogs: orderedDogs,
-            };
-
         case FILTER_DOGS:
-            let filteredDogs;
-
-            if (action.payload.created === false) {
-                if (action.payload.filter !== 'Show all') {
-                    filteredDogs = state.allDogs.filter(dog => {
-                        if (typeof dog.temperament === 'string') {
-                            return dog.temperament.includes(action.payload.filter);
-                        }
-                    });
-                }
-                else {
-                    filteredDogs = [...state.allDogs];
-                }
-
-            } else {
-                if (action.payload.filter !== 'Show all') {
-                    filteredDogs = state.createdDogs.filter(dog => {
-                        if (typeof dog.temperament === 'string') {
-                            return dog.temperament.includes(action.payload.filter);
-                        }
-                    });
-                }
-                else {
-                    filteredDogs = [...state.createdDogs];
-                }
-
+            let updatedDogs;
+            console.log(action.payload);
+            if (action.payload === 'Show all') {
+                updatedDogs = state.allDogs
             }
+            else {
+                updatedDogs = [...state.allDogs].filter(dog => {
+                    if (typeof dog.temperament === 'string') return dog.temperament.includes(action.payload);
+                })
+            }
+
             return {
                 ...state,
-                filteredDogs: filteredDogs,
+                filteredDogs: updatedDogs,
+                shownDogs: [...updatedDogs].slice(0, state.itemsPerPage),
+                currentPage: 1,
+                dogsQty: updatedDogs.length,
             };
 
         case PAGINATION:
@@ -135,14 +106,11 @@ export default function reducer(state = initialState, action) {
                 dogs = [...state.filteredDogs].splice((page - 1) * state.itemsPerPage, state.itemsPerPage);
             }
 
-            // Al filtrar, vuelve a la página 1
-            if (action.payload === 'reset') { }
-
             return {
                 ...state,
                 currentPage: page,
                 shownDogs: dogs,
-            }
+            };
 
         default:
             return state;
