@@ -2,21 +2,21 @@ import { useDispatch } from "react-redux"
 
 import orderDogs from '../../Redux/actions/dogs/orderDogs.js';
 
-export default function Order ({reorder}) {
+export default function Order() {
     const dispatch = useDispatch();
 
     const orderHandler = (e) => {
         dispatch(orderDogs(e.target.value));
-        reorder();
     }
 
     return (
         <div>
-        <select onChange={orderHandler} name="order" id="order">
-            <option  value="Ascendente">A-Z</option>
-            <option  value="Descendente">Z-A</option>
-            {/* por peso también */}
-        </select>
+            <select onChange={orderHandler} name="order" id="order">
+                <option value="NAscendente">Name ↑</option>
+                <option value="NDescendente">Name ↓</option>
+                <option value="WAscendente">Weight ↑</option>
+                <option value="WDescendente">Weight ↓</option>
+            </select>
         </div>
     )
 }

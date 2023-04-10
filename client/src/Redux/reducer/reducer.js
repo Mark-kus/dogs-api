@@ -32,11 +32,10 @@ export default function reducer(state = initialState, action) {
             const dog = action.payload.splice(0, state.itemsPerPage);
             return {
                 ...state,
-                allDogs: dogsPayload,
-                filteredDogs: dogsPayload,
-                orderedDogs: dogsPayload,
-                shownDogs: dog,
-                createdDogs: createdDogs,
+                allDogs: [...dogsPayload],
+                filteredDogs: [...dogsPayload],
+                shownDogs: [...dog],
+                createdDogs: [...createdDogs],
                 dogsQty: state.filteredDogs.length,
             };
 
@@ -44,7 +43,7 @@ export default function reducer(state = initialState, action) {
             const orderedTemps = action.payload.sort((a, b) => a.localeCompare(b));
             return {
                 ...state,
-                allTemps: orderedTemps,
+                allTemps: [...orderedTemps],
             };
 
         case GET_DOG_BY_ID:
@@ -56,7 +55,7 @@ export default function reducer(state = initialState, action) {
         case GET_DOG_BY_NAME:
             return {
                 ...state,
-                searchDogs: action.payload,
+                searchDogs: [...action.payload],
             };
 
         case CREATE_DOG:
@@ -66,8 +65,8 @@ export default function reducer(state = initialState, action) {
             addDogCreated.push(action.payload);
             return {
                 ...state,
-                createdDogs: addDogCreated,
-                allDogs: addDogAll,
+                createdDogs: [...addDogCreated],
+                allDogs: [...addDogAll],
             };
 
         case FILTER_DOGS:
@@ -107,10 +106,66 @@ export default function reducer(state = initialState, action) {
 
             return {
                 ...state,
-                filteredDogs: updatedDogs,
+                filteredDogs: [...updatedDogs],
                 shownDogs: [...updatedDogs].slice(0, state.itemsPerPage),
                 currentPage: 1,
                 dogsQty: updatedDogs.length,
+            };
+
+        case ORDER_DOGS:
+            const { payload } = action;
+            let filtOrderedDogs;
+            let allOrderedDogs;
+
+            if (payload === 'NAscendente') {
+                filtOrderedDogs = state.filteredDogs.sort((a, b) => a.name.localeCompare(b.name));
+                allOrderedDogs = state.allDogs.sort((a, b) => a.name.localeCompare(b.name));
+            }
+            else if (payload === 'NDescendente') {
+                filtOrderedDogs = state.filteredDogs.sort((a, b) => b.name.localeCompare(a.name));
+                allOrderedDogs = state.allDogs.sort((a, b) => b.name.localeCompare(a.name));
+            }
+
+            else if (payload === 'WAscendente') {
+                filtOrderedDogs = state.filteredDogs.sort((a, b) => {
+                    if (isNaN(a.weight.slice(-2))) return -1;
+                    if (isNaN(b.weight.slice(-2))) return 1;
+                    if (Number(a.weight.slice(-2)) > Number(b.weight.slice(-2))) return -1;
+                    if (Number(a.weight.slice(-2)) < Number(b.weight.slice(-2))) return 1;
+                    if (Number(a.weight.slice(-2)) === Number(b.weight.slice(-2))) return 1;
+                });
+                allOrderedDogs = state.allDogs.sort((a, b) => {
+                    if (isNaN(a.weight.slice(-2))) return -1;
+                    if (isNaN(b.weight.slice(-2))) return 1;
+                    if (Number(a.weight.slice(-2)) > Number(b.weight.slice(-2))) return -1;
+                    if (Number(a.weight.slice(-2)) < Number(b.weight.slice(-2))) return 1;
+                    if (Number(a.weight.slice(-2)) === Number(b.weight.slice(-2))) return 1;
+                });
+            }
+
+            else if (payload === 'WDescendente') {
+                filtOrderedDogs = state.filteredDogs.sort((a, b) => {
+                    if (isNaN(a.weight.slice(-2))) return -1;
+                    if (isNaN(b.weight.slice(-2))) return 1;
+                    if (Number(a.weight.slice(-2)) < Number(b.weight.slice(-2))) return -1;
+                    if (Number(a.weight.slice(-2)) > Number(b.weight.slice(-2))) return 1;
+                    if (Number(a.weight.slice(-2)) === Number(b.weight.slice(-2))) return 1;
+                });
+                allOrderedDogs = state.allDogs.sort((a, b) => {
+                    if (isNaN(a.weight.slice(-2))) return -1;
+                    if (isNaN(b.weight.slice(-2))) return 1;
+                    if (Number(a.weight.slice(-2)) < Number(b.weight.slice(-2))) return -1;
+                    if (Number(a.weight.slice(-2)) > Number(b.weight.slice(-2))) return 1;
+                    if (Number(a.weight.slice(-2)) === Number(b.weight.slice(-2))) return 1;
+                });
+            }
+
+            return {
+                ...state,
+                filteredDogs: [...filtOrderedDogs],
+                allDogs: [...allOrderedDogs],
+                shownDogs: [...filtOrderedDogs].splice(0, state.itemsPerPage),
+                currentPage: 1,
             };
 
         case PAGINATION:
@@ -132,7 +187,7 @@ export default function reducer(state = initialState, action) {
             return {
                 ...state,
                 currentPage: page,
-                shownDogs: dogs,
+                shownDogs: [...dogs],
             };
 
         default:
