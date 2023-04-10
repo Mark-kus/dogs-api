@@ -6,7 +6,8 @@ module.exports = async (req, res) => {
     try {
         const temperamentsDB = await getTempsDB();
         if (temperamentsDB.length) {
-            res.status(200).json(temperamentsDB)
+            res.status(200).json(temperamentsDB);
+            return;
         }
         else {
             const temperaments = await getTempsAPI();
