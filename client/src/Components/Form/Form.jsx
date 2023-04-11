@@ -79,20 +79,20 @@ export default function Form() {
 
                 <div className={styles.numeralInputs}>
                     <div>
-                        <input placeholder='Min height' onChange={changeHandler} name='minHeight' type="number" />
-                        <input placeholder='Max height' onChange={changeHandler} name='maxHeight' type="number" />
+                        <input placeholder='Min height' onChange={changeHandler} name='minHeight' type="text" />
+                        <input placeholder='Max height' onChange={changeHandler} name='maxHeight' type="text" />
                     </div>
                     <p>{errors?.minHeight || errors?.maxHeight}</p>
 
                     <div>
-                        <input placeholder='Min weight' onChange={changeHandler} name='minWeight' type="number" />
-                        <input placeholder='Max weight' onChange={changeHandler} name='maxWeight' type="number" />
+                        <input placeholder='Min weight' onChange={changeHandler} name='minWeight' type="text" />
+                        <input placeholder='Max weight' onChange={changeHandler} name='maxWeight' type="text" />
                     </div>
                     <p>{errors?.minWeight || errors?.maxWeight}</p>
 
                     <div>
-                        <input placeholder='Min life span' onChange={changeHandler} name='minLifespan' type="number" />
-                        <input placeholder='Max life span' onChange={changeHandler} name='maxLifespan' type="number" />
+                        <input placeholder='Min life span' onChange={changeHandler} name='minLifespan' type="text" />
+                        <input placeholder='Max life span' onChange={changeHandler} name='maxLifespan' type="text" />
                     </div>
                     <p>{errors?.minLifespan || errors?.maxLifespan}</p>
                 </div>
@@ -108,7 +108,7 @@ export default function Form() {
                 <input onChange={changeHandler} name='image' placeholder='Insert URL of the dog' type="text" />
                 <p>{errors?.image}</p>
 
-                <button type='submit'>Submit dog</button>
+                {!Object.values(errors).length ? <button type='submit'>Submit dog</button>: ''}
             </div>
         </form >
     )

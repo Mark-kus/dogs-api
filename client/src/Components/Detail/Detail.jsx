@@ -36,7 +36,7 @@ export default function Detail() {
 
                         <div>
                             Weight
-                            <h5>{detailDog.weight} kg</h5>
+                            <h5>{!detailDog.weight.includes('NaN') ? `${detailDog.weight} kg` : 'Sin peso'}</h5>
                         </div>
                     </div>
 
