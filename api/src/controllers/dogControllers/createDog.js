@@ -9,8 +9,7 @@ module.exports = async (name, image, height, weight, lifespan, temperament) => {
         image: image,
     });
     await temperament.map(async (temp) => {
-        const searchTemp = temp.trim();
-        const temper = await Temperament.findOne({ where: { name: searchTemp } });
+        const temper = await Temperament.findOne({ where: { name: temp } });
         await newDog.addTemperament(temper);
     });
 
