@@ -7,7 +7,7 @@
     font-size: 1.5em;
     width: 100vw;
     height: 100vh;
-    background: linear-gradient(var(--light-brown), var(--dark-brown) 60%);
+    background: var(--dark-brown);
     backdrop-filter: blur(16px);
 
     display: flex;
@@ -55,5 +55,6 @@
     font-size: 1em;
     width: 70vw;
     height: 70vh;
+    background: linear-gradient(90deg, var(--light-brown), var(--dark-brown) 15%);
 }
 }
