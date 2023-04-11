@@ -23,7 +23,7 @@ export default function Form() {
         image: '',
     });
     const [errors, setErrors] = useState({
-        allFields: "All fields are required",
+        temperament: 'The dog should have at least one temperament',
     });
 
     const changeHandler = (e) => {
@@ -41,32 +41,51 @@ export default function Form() {
     const temperHandler = (e) => {
         const { value } = e.target;
         // Si ya existe el temperamento, no hace nada
-        if (inputs.temperament.includes(value)) return;
+        if (inputs.temperament.includes(value) || inputs.temperament.length === 5) return;
         // Si no, lo pasa a inputs y errors
         setInputs({
             ...inputs,
             // Temperaments, es el valor ingresado, más los 4 primeros temps ya seleccionados
-            temperament: [value + " ", ...inputs.temperament.splice(0, 5)],
+            temperament: [...inputs.temperament, value],
         });
         setErrors(
             validate({
                 ...inputs,
-                temperament: [value + " ", ...inputs.temperament.splice(0, 5)],
+                temperament: [...inputs.temperament, value],
+            })
+        );
+    }
+
+    const deleteTempHandler = (e) => {
+        const deleteTemp = e.target.innerText;
+        const newTemps = [...inputs.temperament.filter(temp => temp !== deleteTemp)];
+        setInputs({
+            ...inputs,
+            temperament: [...newTemps],
+        });
+        setErrors(
+            validate({
+                ...inputs,
+                temperament: [...newTemps],
             })
         );
     }
 
     const submitHandler = (e) => {
-        e.preventDefault();
-        dispatch(createDog({
-            name: inputs.name,
-            height: `${inputs.minHeight} - ${inputs.maxHeight}`,
-            weight: `${inputs.minWeight} - ${inputs.maxWeight}`,
-            lifespan: `${inputs.minLifespan} - ${inputs.maxLifespan}`,
-            image: inputs.image,
-            temperament: inputs.temperament,
-        }));
-        navigate("/dogs");
+        try {
+            e.preventDefault();
+            dispatch(createDog({
+                name: inputs.name,
+                height: `${inputs.minHeight} - ${inputs.maxHeight}`,
+                weight: `${inputs.minWeight} - ${inputs.maxWeight}`,
+                lifespan: `${inputs.minLifespan} - ${inputs.maxLifespan}`,
+                image: inputs.image,
+                temperament: inputs.temperament,
+            }));
+            navigate("/dogs");
+        } catch (e) {
+            console.log(e, "ESTOY MANEJANDO ERRORESSSS");
+        }
     }
 
     return (
@@ -103,12 +122,23 @@ export default function Form() {
                         return <option key={i} value={temper}>{temper}</option>
                     })}
                 </select>
+                <div className={styles.tempContainer}>
+                    {inputs?.temperament.map((temp, i) => (
+                        <span
+                            key={i}
+                            className={styles.temp}
+                            onClick={deleteTempHandler}
+                        >{temp}</span>
+                    ))}
+                </div>
                 <p>{errors?.temperament}</p>
 
                 <input onChange={changeHandler} name='image' placeholder='Insert URL of the dog' type="text" />
                 <p>{errors?.image}</p>
 
-                {!Object.values(errors).length ? <button type='submit'>Submit dog</button>: ''}
+                {!Object.values(errors).length
+                    ? <button type='submit'>Submit dog</button>
+                    : <p className={styles.submitnt}>Completa los campos</p>}
             </div>
         </form >
     )

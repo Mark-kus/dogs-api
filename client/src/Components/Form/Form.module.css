@@ -23,20 +23,62 @@
     justify-content: space-between;
 }
 
-.container input,
-.container select {
+.container input {
     box-sizing: border-box;
     width: 100%;
     border-radius: 8px;
     padding: 8px;
 }
 
-.container button {
+.container select {
+    box-sizing: border-box;
+    width: 100%;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    padding: 8px;
+}
+
+.tempContainer {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    width: 100%;
+    background-color: white;
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+}
+
+.temp {
+    color: black;
+    font-size: 0.9em;
+    cursor: pointer;
+    padding: 4px 4px;
+}
+
+.temp:hover {
+    background-color: rgb(255, 133, 133);
+}
+
+.container button,
+.submitnt {
     border-radius: 8px;
     border: solid 1px black;
-    background-color: #3a6f96;
+    background-color: #3a9659;
     padding: 8px;
     width: 100%;
+}
+
+.container button {
+    cursor: pointer;
+}
+
+.container button:hover {
+    background-color: #2ec479;
+}
+
+.submitnt {
+    background-color: rgb(194, 32, 32);
+    color: white;
 }
 
 @media (min-width: 1000px) {

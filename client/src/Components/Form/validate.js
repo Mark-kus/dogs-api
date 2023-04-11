@@ -26,7 +26,9 @@ const validate = (inputs) => {
         if (isNaN(Number(maxWeight))) errors.maxWeight = "The weight must be a number";
     }
     if (minWeight && maxWeight) {
-        if (Number(minWeight) > Number(maxWeight)) errors.minWeight = "The maximum Weight must be greater than the minimum";
+        if (Number(minWeight) > Number(maxWeight)) errors.minWeight = "The maximum weight must be greater than the minimum";
+        if (minWeight <= 0) errors.minWeight = "The minimum weight should be greater than 0 kg";
+        if (maxWeight > 100) errors.maxWeight = "The maximum weight should be less than 100 kg";
     }
 
 
@@ -37,6 +39,8 @@ const validate = (inputs) => {
     }
     if (minHeight && maxHeight) {
         if (Number(minHeight) > Number(maxHeight)) errors.minHeight = "The maximum height must be greater than the minimum";
+        if (minHeight <= 0) errors.minHeight = "The minimum height should be greater than 0 cm";
+        if (maxHeight > 100) errors.maxHeight = "The maximum height should be less than 100 cm";
     }
 
 
@@ -47,13 +51,15 @@ const validate = (inputs) => {
     }
     if (minLifespan && maxLifespan) {
         if (Number(minLifespan) > Number(maxLifespan)) errors.minLifespan = "The maximum lifespan must be greater than the minimum";
+        if (minLifespan <= 1) errors.minLifespan = "The minimum life span should be greater than a year";
+        if (maxLifespan >= 40) errors.maxLifespan = "The maximum life span should be less than 40 years";
     }
 
     if (image) {
         if (!/^(https?|ftp):\/\/[^\s/$.?#].[^\s]*$/i.test(image)) errors.image = "The image must be a valid URL";
     }
 
-    if (!temperament.length && image) {
+    if (!temperament.length) { // falta esto
         errors.temperament = "The dog should have at least one temperament";
     }
 
