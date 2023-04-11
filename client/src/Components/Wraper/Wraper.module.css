@@ -24,10 +24,22 @@
 .pagination button {
     color: #f2f0ee;
     background: none;
-    border: none;
+    height: 1.5em;
+    margin: 4px;
+    border: solid 1px var(--dark-brown);
     transition: background 300ms ease;
 }
 
 .pagination button:hover {
     background-color: #964125;
+}
+
+.finalPagination {
+    display: none;
+}
+
+@media screen and (min-width: 600px) {
+    .finalPagination {
+        display: block;
+    }
 }

@@ -16,7 +16,7 @@ export default function Detail() {
     return (
         <>
             {load ? <section className={styles.detail}>
-                <Link to="/dogs" className={styles.backButton}> 🢀 Back </Link>
+                <Link to="/dogs" className={styles.backButton}> 🠔 Back </Link>
 
                 <img src={detailDog.image} className={styles.dogBigExample} alt={`${detailDog.name} example`} />
 

@@ -11,6 +11,16 @@ export default function Wraper() {
     const { shownDogs, currentPage, itemsPerPage, dogsQty } = useSelector(state => state);
     const dispatch = useDispatch();
 
+    // Página inicial
+    const startHandler = () => {
+        dispatch(pagination('start'));
+    }
+
+    // Página final
+    const endHandler = () => {
+        dispatch(pagination('end'));
+    }
+
     // Página anterior
     const prevHandler = () => {
         if (currentPage === 1) return;
@@ -22,16 +32,18 @@ export default function Wraper() {
         if (currentPage * itemsPerPage >= dogsQty) return;
         dispatch(pagination('next'));
     }
-    
+
     return (
         <div className={styles.container}>
             <>
                 <div className={styles.orderFilter}>
                     <Order />
                     <div className={styles.pagination}>
-                        <button onClick={prevHandler}>&laquo;</button>
+                        <button className={styles.finalPagination} onClick={startHandler}>&lArr;</button>
+                        <button onClick={prevHandler}>&lt;</button>
                         <h4>Página {currentPage}</h4>
-                        <button onClick={nextHandler}>&raquo;</button>
+                        <button onClick={nextHandler}>&gt;</button>
+                        <button className={styles.finalPagination} onClick={endHandler}>&rArr;</button>
                     </div>
                     <Filter />
                 </div>
@@ -41,9 +53,11 @@ export default function Wraper() {
                         dog={dog} />)}
                 </section>
                 <div className={styles.pagination}>
-                    <button onClick={prevHandler}>&laquo;</button>
+                    <button onClick={startHandler}>&lArr;</button>
+                    <button onClick={prevHandler}>&lt;</button>
                     <h4>Página {currentPage}</h4>
-                    <button onClick={nextHandler}>&raquo;</button>
+                    <button onClick={nextHandler}>&gt;</button>
+                    <button onClick={endHandler}>&rArr;</button>
                 </div>
             </>
 

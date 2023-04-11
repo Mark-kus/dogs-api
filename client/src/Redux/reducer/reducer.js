@@ -67,6 +67,7 @@ export default function reducer(state = initialState, action) {
                 ...state,
                 createdDogs: [...addDogCreated],
                 allDogs: [...addDogAll],
+                detailDog: {},
             };
 
         case FILTER_DOGS:
@@ -112,6 +113,7 @@ export default function reducer(state = initialState, action) {
                 shownDogs: [...updatedDogs].slice(0, state.itemsPerPage),
                 currentPage: 1,
                 dogsQty: updatedDogs.length,
+                detailDog: {},
             };
 
         case ORDER_DOGS:
@@ -172,6 +174,7 @@ export default function reducer(state = initialState, action) {
                 allDogs: [...allOrderedDogs],
                 shownDogs: [...filtOrderedDogs].splice(0, state.itemsPerPage),
                 currentPage: 1,
+                detailDog: {},
             };
 
         case PAGINATION:
@@ -190,10 +193,27 @@ export default function reducer(state = initialState, action) {
                 dogs = [...state.filteredDogs].splice((page - 1) * state.itemsPerPage, state.itemsPerPage);
             }
 
+            // If start
+            if (action.payload === 'start') {
+                page = 1;
+                dogs = [...state.filteredDogs].splice((page - 1) * state.itemsPerPage, state.itemsPerPage);
+            }
+
+            // If end
+            if (action.payload === 'end') {
+                let futurePage = 1;
+                while (futurePage * state.itemsPerPage < state.dogsQty) {
+                    futurePage++;
+                }
+                page = futurePage;
+                dogs = [...state.filteredDogs].splice((page - 1) * state.itemsPerPage, state.itemsPerPage);
+            }
+
             return {
                 ...state,
                 currentPage: page,
                 shownDogs: [...dogs],
+                detailDog: {},
             };
 
         default:

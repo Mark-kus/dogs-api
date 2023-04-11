@@ -61,6 +61,7 @@
 
 .container button,
 .submitnt {
+    font-size: 0.9em;
     border-radius: 8px;
     border: solid 1px black;
     background-color: #3a9659;
