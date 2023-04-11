@@ -3,10 +3,57 @@
     margin: auto;
 }
 
+.landingContainer {
+    font-size: 1.5em;
+    width: 100vw;
+    height: 100vh;
+    background: linear-gradient(var(--light-brown), var(--dark-brown) 60%);
+    backdrop-filter: blur(16px);
+
+    display: flex;
+    justify-content: space-between;
+}
+
+.landingContainer div {
+    margin: 0 auto;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.container p {
+    line-height: 8px;
+}
+
+.container h2 {
+    line-height: 64px;
+}
+
 .link {
     text-decoration: none;
-    background-color: var(--dark-brown);
-    box-shadow: 0 0 8px 8px var(--dark-brown);
+    background-color: var(--darker-brown);
+    border: var(--white-text) solid 1px;
+    border-radius: 8px;
     color: var(--white-text);
+    width: 30%;
     padding: 16px;
+}
+
+.container img {
+    display: none;
+}
+
+/* Previous styles are for phone size, next ones for desktops */
+
+@media screen and (min-width: 1200px) {
+.container img {
+    display: block;
+}
+.landingContainer {
+    font-size: 1em;
+    width: 70vw;
+    height: 70vh;
+}
 }
