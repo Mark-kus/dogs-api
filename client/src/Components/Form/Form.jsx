@@ -132,13 +132,13 @@ export default function Form() {
                     ))}
                 </div>
                 <p>{errors?.temperament}</p>
-
+                        
                 <input onChange={changeHandler} name='image' placeholder='Insert URL of the dog' type="text" />
                 <p>{errors?.image}</p>
 
                 {!Object.values(errors).length
                     ? <button type='submit'>Submit dog</button>
-                    : <p className={styles.submitnt}>Completa los campos</p>}
+                    : <div className={styles.submitnt}>Completa los campos</div>}
             </div>
         </form >
     )
