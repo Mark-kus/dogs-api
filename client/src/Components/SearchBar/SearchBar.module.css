@@ -30,7 +30,7 @@
     padding: 0;
 }
 
-.searchbar .link {
+.searchbar .link, .linknt {
     display: block;
     text-decoration: none;
     color: var(--black-text);
@@ -45,6 +45,10 @@
 
 .searchbar .link+.link {
     border-top: 1px solid #bfc8c9;
+}
+
+.linknt {
+    cursor: default;
 }
 
 .hidden {

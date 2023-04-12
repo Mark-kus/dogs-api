@@ -19,7 +19,7 @@ export default function Searchbar() {
         shownList = [...searchDogs].splice(0, 8);
     }
 
-    const selectHandler = (e) => {
+    const selectHandler = () => {
         setInput('');
     }
 
@@ -30,6 +30,7 @@ export default function Searchbar() {
                 placeholder='Search for breed'
                 autoComplete='off'
                 onChange={searchHandler}
+                onBlur={selectHandler}
                 id="raceName"
                 type="text"
                 name="raceName"
@@ -39,7 +40,7 @@ export default function Searchbar() {
             <ul role='listbox'
                 className={input ? '' : styles.hidden}
                 aria-label='Search for breed'>
-                {shownList.map(dog => <Link
+                {shownList.length ? shownList.map(dog => <Link
                     key={dog.id}
                     className={styles.link}
                     to={`/dogs/${dog.id}`}
@@ -47,7 +48,7 @@ export default function Searchbar() {
                     onClick={selectHandler}
                 >
                     {dog.name}
-                </Link>)}
+                </Link>) : <li className={styles.linknt}>The breed doesn't exists</li>}
             </ul>
         </div >
     )
