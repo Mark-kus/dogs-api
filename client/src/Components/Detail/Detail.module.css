@@ -28,8 +28,18 @@
     box-sizing: border-box;
     width: 100%;
     background-color: var(--dark-brown);
+    border: none;
 
     text-decoration: none;
+    color: var(--white-text);
+    transition: background 200ms ease;
+}
+
+.buttons {
+    display: flex;
+    box-sizing: border-box;
+    width: 100%;
+
     color: var(--white-text);
     transition: background 200ms ease;
 }

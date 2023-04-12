@@ -6,3 +6,4 @@ export const GET_ALL_TEMPS = 'GET_ALL_TEMPS';
 export const ORDER_DOGS = "ORDER_DOGS";
 export const FILTER_DOGS = "FILTER_DOGS";
 export const PAGINATION = 'PAGINATION';
+export const DELETE_DOG = 'DELETE_DOG';

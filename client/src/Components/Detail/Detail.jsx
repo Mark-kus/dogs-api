@@ -1,11 +1,14 @@
-import { useState } from 'react';
-import Loader from '../Loader/Loader';
 import styles from './Detail.module.css';
+import Loader from '../Loader/Loader';
+import deleteDog from '../../Redux/actions/dogs/deleteDog';
 
-import { useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { Link, useNavigate } from 'react-router-dom';
 
 export default function Detail() {
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
     const { detailDog } = useSelector(state => state);
     const [load, setLoad] = useState(false);
 
@@ -13,10 +16,18 @@ export default function Detail() {
         setLoad(true);
     }, 1000)
 
+    const deleteCard = () => {
+        dispatch(deleteDog(detailDog.id))
+        navigate('/dogs');
+    }
+
     return (
         <>
             {load ? <section className={styles.detail}>
-                <Link to="/dogs" className={styles.backButton}> 🠔 Back </Link>
+                <div className={styles.buttons}>
+                    <Link to="/dogs" className={styles.backButton}> 🠔 Back </Link>
+                    {detailDog.created ? <button onClick={deleteCard} className={styles.backButton}>X</button> : ''}
+                </div>
 
                 <img src={detailDog.image} className={styles.dogBigExample} alt={`${detailDog.name} example`} />
 

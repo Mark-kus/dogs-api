@@ -6,7 +6,8 @@ import {
     CREATE_DOG,
     ORDER_DOGS,
     FILTER_DOGS,
-    PAGINATION
+    PAGINATION,
+    DELETE_DOG,
 } from '../types';
 
 // Seteamos el estado inicial del reducer
@@ -53,9 +54,12 @@ export default function reducer(state = initialState, action) {
             };
 
         case GET_DOG_BY_NAME:
+            let response;
+            if (action.payload.msg) response = [];
+            else response = action.payload;
             return {
                 ...state,
-                searchDogs: [...action.payload],
+                searchDogs: response,
             };
 
         case CREATE_DOG:
@@ -67,6 +71,20 @@ export default function reducer(state = initialState, action) {
                 ...state,
                 createdDogs: [...addDogCreated],
                 allDogs: [...addDogAll],
+                detailDog: {},
+            };
+
+        case DELETE_DOG:
+            console.log(action.payload);
+            const notDeletedCreated = state.createdDogs.filter(dog => dog.id !== action.payload)
+            const notDeletedAll = state.allDogs.filter(dog => dog.id !== action.payload)
+            const notDeletedFiltered = state.filteredDogs.filter(dog => dog.id !== action.payload)
+            return {
+                ...state,
+                createdDogs: [...notDeletedCreated],
+                allDogs: [...notDeletedAll],
+                filteredDogs: [...notDeletedFiltered],
+                shownDogs: [...notDeletedFiltered].splice(0, state.itemsPerPage),
                 detailDog: {},
             };
 
