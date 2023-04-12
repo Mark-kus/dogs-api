@@ -11,6 +11,7 @@ export default function Form() {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const { allTemps } = useSelector(state => state);
+    const [completed, setCompleted] = useState(false)
     const [inputs, setInputs] = useState({
         name: '',
         minHeight: '',
@@ -36,6 +37,7 @@ export default function Form() {
             ...inputs,
             [name]: value,
         }));
+        completedInputs(value, name);
     }
 
     const temperHandler = (e) => {
@@ -72,20 +74,26 @@ export default function Form() {
     }
 
     const submitHandler = (e) => {
-        try {
-            e.preventDefault();
-            dispatch(createDog({
-                name: inputs.name,
-                height: `${inputs.minHeight} - ${inputs.maxHeight}`,
-                weight: `${inputs.minWeight} - ${inputs.maxWeight}`,
-                lifespan: `${inputs.minLifespan} - ${inputs.maxLifespan}`,
-                image: inputs.image,
-                temperament: inputs.temperament,
-            }));
-            navigate("/dogs");
-        } catch (e) {
-            console.log(e, "ESTOY MANEJANDO ERRORESSSS");
-        }
+        e.preventDefault();
+        dispatch(createDog({
+            name: inputs.name,
+            height: `${inputs.minHeight} - ${inputs.maxHeight}`,
+            weight: `${inputs.minWeight} - ${inputs.maxWeight}`,
+            lifespan: `${inputs.minLifespan} - ${inputs.maxLifespan}`,
+            image: inputs.image,
+            temperament: inputs.temperament,
+        }));
+        navigate("/dogs");
+    }
+
+    const completedInputs = (value, name) => {
+        const testInputs = { ...inputs, [name]: value }
+        const completes = Object.values(testInputs).map(input => {
+            if (input.length > 0) return true;
+            else return false;
+        })
+        if ([...completes].every(Boolean)) setCompleted(true);
+        else setCompleted(false);
     }
 
     return (
@@ -98,20 +106,20 @@ export default function Form() {
 
                 <div className={styles.numeralInputs}>
                     <div>
-                        <input placeholder='Min height' onChange={changeHandler} name='minHeight' type="text" />
-                        <input placeholder='Max height' onChange={changeHandler} name='maxHeight' type="text" />
+                        <input placeholder='Min height' onChange={changeHandler} name='minHeight' type="number" />
+                        <input placeholder='Max height' onChange={changeHandler} name='maxHeight' type="number" />
                     </div>
                     <p>{errors?.minHeight || errors?.maxHeight}</p>
 
                     <div>
-                        <input placeholder='Min weight' onChange={changeHandler} name='minWeight' type="text" />
-                        <input placeholder='Max weight' onChange={changeHandler} name='maxWeight' type="text" />
+                        <input placeholder='Min weight' onChange={changeHandler} name='minWeight' type="number" />
+                        <input placeholder='Max weight' onChange={changeHandler} name='maxWeight' type="number" />
                     </div>
                     <p>{errors?.minWeight || errors?.maxWeight}</p>
 
                     <div>
-                        <input placeholder='Min life span' onChange={changeHandler} name='minLifespan' type="text" />
-                        <input placeholder='Max life span' onChange={changeHandler} name='maxLifespan' type="text" />
+                        <input placeholder='Min life span' onChange={changeHandler} name='minLifespan' type="number" />
+                        <input placeholder='Max life span' onChange={changeHandler} name='maxLifespan' type="number" />
                     </div>
                     <p>{errors?.minLifespan || errors?.maxLifespan}</p>
                 </div>
@@ -132,11 +140,11 @@ export default function Form() {
                     ))}
                 </div>
                 <p>{errors?.temperament}</p>
-                        
+
                 <input onChange={changeHandler} name='image' placeholder='Insert URL of the dog' type="text" />
                 <p>{errors?.image}</p>
 
-                {!Object.values(errors).length
+                {!Object.values(errors).length && completed
                     ? <button type='submit'>Submit dog</button>
                     : <div className={styles.submitnt}>Completa los campos</div>}
             </div>
