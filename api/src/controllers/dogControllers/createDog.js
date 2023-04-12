@@ -1,10 +1,16 @@
 const { Dog, Temperament } = require('../../db/db.js');
 
 module.exports = async (name, image, height, weight, lifespan, temperament) => {
+    nameCased = name.slice(0, 1).toUpperCase() + name.slice(1, name.length).toLowerCase();
+    for (let i = 1; i < nameCased.length; i++) {
+        if (nameCased.charAt(i) === ' ') {
+            nameCased = nameCased.slice(0, i + 1) + nameCased.slice(i + 1, i + 2).toUpperCase() + nameCased.slice(i + 2, nameCased.length);
+        }
+    }
     const newDog = await Dog.create({
         weight: weight,
         height: height,
-        name: name,
+        name: nameCased,
         lifespan: lifespan,
         image: image,
     });
@@ -13,11 +19,11 @@ module.exports = async (name, image, height, weight, lifespan, temperament) => {
         await newDog.addTemperament(temper);
     });
 
-    const returnedTemps = temperament.map(temp => temp.trim()).join(', ');
+    const returnedTemps = temperament.join(', ');
     return {
         weight: weight,
         height: height,
-        name: name,
+        name: nameCased,
         lifespan: lifespan,
         image: image,
         temperament: returnedTemps,
