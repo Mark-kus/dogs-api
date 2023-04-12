@@ -72,6 +72,7 @@ export default function reducer(state = initialState, action) {
                 createdDogs: [...addDogCreated],
                 allDogs: [...addDogAll],
                 detailDog: {},
+                filteredDogs: [...addDogAll],
             };
 
         case DELETE_DOG:
@@ -143,6 +144,7 @@ export default function reducer(state = initialState, action) {
                 filtOrderedDogs = state.filteredDogs.sort((a, b) => a.name.localeCompare(b.name));
                 allOrderedDogs = state.allDogs.sort((a, b) => a.name.localeCompare(b.name));
             }
+            
             else if (payload === 'NDescendente') {
                 filtOrderedDogs = state.filteredDogs.sort((a, b) => b.name.localeCompare(a.name));
                 allOrderedDogs = state.allDogs.sort((a, b) => b.name.localeCompare(a.name));
