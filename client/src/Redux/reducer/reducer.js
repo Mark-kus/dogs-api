@@ -154,16 +154,16 @@ export default function reducer(state = initialState, action) {
                 filtOrderedDogs = state.filteredDogs.sort((a, b) => {
                     if (isNaN(a.weight.slice(-2))) return -1;
                     if (isNaN(b.weight.slice(-2))) return 1;
-                    if (Number(a.weight.slice(-2)) > Number(b.weight.slice(-2))) return -1;
-                    if (Number(a.weight.slice(-2)) < Number(b.weight.slice(-2))) return 1;
+                    if (Number(a.weight.slice(-2)) < Number(b.weight.slice(-2))) return -1;
+                    if (Number(a.weight.slice(-2)) > Number(b.weight.slice(-2))) return 1;
                     if (Number(a.weight.slice(-2)) === Number(b.weight.slice(-2))) return 1;
                     return false;
                 });
                 allOrderedDogs = state.allDogs.sort((a, b) => {
                     if (isNaN(a.weight.slice(-2))) return -1;
                     if (isNaN(b.weight.slice(-2))) return 1;
-                    if (Number(a.weight.slice(-2)) > Number(b.weight.slice(-2))) return -1;
-                    if (Number(a.weight.slice(-2)) < Number(b.weight.slice(-2))) return 1;
+                    if (Number(a.weight.slice(-2)) < Number(b.weight.slice(-2))) return -1;
+                    if (Number(a.weight.slice(-2)) > Number(b.weight.slice(-2))) return 1;
                     if (Number(a.weight.slice(-2)) === Number(b.weight.slice(-2))) return 1;
                     return false;
                 });
@@ -173,16 +173,16 @@ export default function reducer(state = initialState, action) {
                 filtOrderedDogs = state.filteredDogs.sort((a, b) => {
                     if (isNaN(a.weight.slice(-2))) return -1;
                     if (isNaN(b.weight.slice(-2))) return 1;
-                    if (Number(a.weight.slice(-2)) < Number(b.weight.slice(-2))) return -1;
-                    if (Number(a.weight.slice(-2)) > Number(b.weight.slice(-2))) return 1;
+                    if (Number(a.weight.slice(-2)) > Number(b.weight.slice(-2))) return -1;
+                    if (Number(a.weight.slice(-2)) < Number(b.weight.slice(-2))) return 1;
                     if (Number(a.weight.slice(-2)) === Number(b.weight.slice(-2))) return 1;
                     return false;
                 });
                 allOrderedDogs = state.allDogs.sort((a, b) => {
                     if (isNaN(a.weight.slice(-2))) return -1;
                     if (isNaN(b.weight.slice(-2))) return 1;
-                    if (Number(a.weight.slice(-2)) < Number(b.weight.slice(-2))) return -1;
-                    if (Number(a.weight.slice(-2)) > Number(b.weight.slice(-2))) return 1;
+                    if (Number(a.weight.slice(-2)) > Number(b.weight.slice(-2))) return -1;
+                    if (Number(a.weight.slice(-2)) < Number(b.weight.slice(-2))) return 1;
                     if (Number(a.weight.slice(-2)) === Number(b.weight.slice(-2))) return 1;
                     return false;
                 });
