@@ -56,6 +56,7 @@ export default function Form() {
                 temperament: [...inputs.temperament, value],
             })
         );
+        completedInputs(value, 'temperament');
     }
 
     const deleteTempHandler = (e) => {

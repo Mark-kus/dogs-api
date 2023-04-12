@@ -59,7 +59,7 @@ const validate = (inputs) => {
         if (!/^(https?|ftp):\/\/[^\s/$.?#].[^\s]*$/i.test(image)) errors.image = "The image must be a valid URL";
     }
 
-    if (!temperament.length) { // falta esto
+    if (!temperament.length) {
         errors.temperament = "The dog should have at least one temperament";
     }
 
