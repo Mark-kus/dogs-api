@@ -1,5 +1,6 @@
 module.exports = (array) =>
-    array.map(elem => {
+array.map(elem => {
+        console.log(elem)
         return {
             weight: elem.weight,
             height: elem.height,

@@ -3,7 +3,7 @@ const { Router } = require('express');
 // Traigo los middlewares
 const validate = require('../middlewares/validate');
 
-// Traigo los controladores
+// Traigo los handlers
 const getAllDogs = require('../handlers/dogs/getAllDogs');
 const getDogId = require('../handlers/dogs/getDogId');
 const getDogName = require('../handlers/dogs/getDogName');

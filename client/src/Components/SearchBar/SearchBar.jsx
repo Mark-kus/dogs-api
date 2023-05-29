@@ -19,8 +19,8 @@ export default function Searchbar() {
         shownList = [...searchDogs].splice(0, 8);
     }
 
-    const selectHandler = () => {
-        setInput('');
+    const selectHandler = (e) => {
+        // if (e.target.tag !== 'li') setInput('');
     }
 
     return (
@@ -30,7 +30,7 @@ export default function Searchbar() {
                 placeholder='Search for breed'
                 autoComplete='off'
                 onChange={searchHandler}
-                onBlur={selectHandler}
+                // onBlur={selectHandler}
                 id="raceName"
                 type="text"
                 name="raceName"
