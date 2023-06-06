@@ -4,7 +4,7 @@
   "description": "-  Construir una Single Page Application utlizando las tecnologías: **React**, **Redux**, **Node**, **Express** y **Sequelize**.\r -  Poner en práctica recursos básicos de estilos y diseño (UX : UI).\r -  Afirmar y conectar los conceptos aprendidos en la carrera de SoyHenry.\r -  Aprender mejores prácticas.\r -  Aprender y practicar el workflow de GIT.",
   "main": "index.js",
   "scripts": {
-    "start": "node run start --workspace=api",
+    "start": "npm start --workspace=api",
     "build": "npm run build --workspace=client",
     "dev": "npm run build && npm start"
   },
