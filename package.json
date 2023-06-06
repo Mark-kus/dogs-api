@@ -1,12 +1,24 @@
 {
-  "name": "pi-dogs-main",
+  "name": "dogs-api",
   "version": "1.0.0",
-  "description": "![HenryLogo](https://d31uz8lwfmyn8g.cloudfront.net/Assets/logo-henry-white-lg.png)",
+  "description": "-  Construir una Single Page Application utlizando las tecnologías: **React**, **Redux**, **Node**, **Express** y **Sequelize**.\r -  Poner en práctica recursos básicos de estilos y diseño (UX : UI).\r -  Afirmar y conectar los conceptos aprendidos en la carrera de SoyHenry.\r -  Aprender mejores prácticas.\r -  Aprender y practicar el workflow de GIT.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node run start --workspace=api",
+    "build": "npm run build --workspace=client",
+    "dev": "npm run build && npm start"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
   },
   "keywords": [],
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "private": "true",
+  "workspaces":[
+    "apps/*"
+  ]
 }

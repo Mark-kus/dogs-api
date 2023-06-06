@@ -1,4 +1,4 @@
-import styles from './Footer.module.css';
+import './Footer.module.css';
 import linkedin from '../../assets/linkedin-logo.png';
 import github from '../../assets/github.png';
 

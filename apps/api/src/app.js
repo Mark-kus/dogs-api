@@ -2,6 +2,7 @@ const express = require('express');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const routes = require('./routes/index.js');
+const path = require('path')
 
 require('./db/db.js');
 
@@ -20,7 +21,8 @@ server.use((req, res, next) => {            // Esto debe ser reemplazado por * p
   next();
 });
 
-server.use('/', routes);
+server.use('/api', routes);
+server.use(express.static(path.join(__dirname, '../../', 'client/build')))
 
 // Error catching endware.
 server.use((err, req, res, next) => { // eslint-disable-line no-unused-vars

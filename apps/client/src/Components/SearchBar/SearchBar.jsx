@@ -1,5 +1,5 @@
 // SearchBar: un input de búsqueda para encontrar razas de perros por nombre.
-import styles from './Searchbar.module.css';
+import styles from './SearchBar.module.css';
 
 import { useDispatch, useSelector } from 'react-redux';
 import { useState } from 'react';

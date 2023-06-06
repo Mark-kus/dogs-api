@@ -76,7 +76,6 @@ export default function reducer(state = initialState, action) {
             };
 
         case DELETE_DOG:
-            console.log(action.payload);
             const notDeletedCreated = state.createdDogs.filter(dog => dog.id !== action.payload)
             const notDeletedAll = state.allDogs.filter(dog => dog.id !== action.payload)
             const notDeletedFiltered = state.filteredDogs.filter(dog => dog.id !== action.payload)
