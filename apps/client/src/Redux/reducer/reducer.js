@@ -37,7 +37,7 @@ export default function reducer(state = initialState, action) {
                 filteredDogs: [...dogsPayload],
                 shownDogs: [...dog],
                 createdDogs: [...createdDogs],
-                dogsQty: state.filteredDogs.length,
+                dogsQty: action.payload.length,
             };
 
         case GET_ALL_TEMPS:
