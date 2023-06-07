@@ -24,6 +24,11 @@ server.use((req, res, next) => {            // Esto debe ser reemplazado por * p
 server.use('/api', routes);
 server.use(express.static(path.join(__dirname, '../../', 'client/build')))
 
+// Para que sirva la build al recargar una ruta
+server.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, '../../', 'client/build', 'index.html'));
+});
+
 // Error catching endware.
 server.use((err, req, res, next) => { // eslint-disable-line no-unused-vars
   const status = err.status || 500;
