@@ -19,3 +19,15 @@ La idea de este proyecto es construir una aplicación web a partir de la API [**
 -  Ordenarlos.
 -  Crear nuevos perros.
 -  Eliminar perros creados.
+
+# ** Levantar la web **
+
+# Requisitos
+Tener instalado Node.js y PostgreSQL
+
+# Pasos
+1. Clonar el repo
+2. Ejecuta `npm i` dentro de /dogs-api
+3. Dentro de /dogs-api/apps/api hay un archivo .env.example con variables de entorno que deberás copiar y pegar dentro de un archivo .env creado por ti. Dale sus valores correspondientes a cada variable de entorno.
+4. Al nivel de /dogs-api ejecuta el comando `npm run dev`
+5. Listo, en la terminal vas a tener el link donde ver los resultados.
