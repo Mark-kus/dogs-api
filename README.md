@@ -20,7 +20,7 @@ La idea de este proyecto es construir una aplicación web a partir de la API [**
 -  Crear nuevos perros.
 -  Eliminar perros creados.
 
-# ** Levantar la web **
+# **Levantar la web**
 
 # Requisitos
 Tener instalado Node.js y PostgreSQL
