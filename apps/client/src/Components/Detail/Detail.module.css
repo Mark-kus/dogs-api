@@ -1,8 +1,13 @@
 .detail {
     align-self: center;
-    width: 40%;
     display: flex;
     flex-direction: column;
+}
+
+@media (min-width: 800px) {
+    .detail {
+        width: 40%;
+    }
 }
 
 .detail img {
