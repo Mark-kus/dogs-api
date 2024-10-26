@@ -1,0 +1,31 @@
+.filterContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 20px 0;
+}
+
+.label {
+  margin-bottom: 10px;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.checkbox {
+  margin-bottom: 20px;
+  cursor: pointer;
+}
+
+.select {
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  background-color: #f9f9f9;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.option {
+  padding: 10px;
+  font-size: 16px;
+}

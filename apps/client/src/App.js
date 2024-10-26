@@ -9,13 +9,13 @@ import Detail from './Components/Detail/Detail.jsx';
 
 import { Routes, Route, useLocation } from 'react-router-dom';
 import { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import { useAppDispatch } from './Redux/hooks.js'
 import getAllDogs from './Redux/actions/dogs/getAllDogs';
 import getAllTemps from './Redux/actions/temperaments/getAllTemps';
 import getDogById from './Redux/actions/dogs/getDogById';
 
 export default function App() {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const location = useLocation();
   const { pathname } = location;
 
@@ -31,14 +31,14 @@ export default function App() {
 
   return (
     <div className="app">
-      {pathname !== '/' ? <Navbar /> : ''}
+      {pathname !== '/' && <Navbar />}
       <Routes>
         <Route path='/dogs' element={<Wraper />} />
         <Route path='/dogs/:id' element={<Detail />} />
         <Route path='/new' element={<Form />} />
         <Route path='/' element={<Landing />} />
       </Routes>
-      {pathname !== '/' ? <Footer /> : ''}
+      {pathname !== '/' && <Footer />}
 
     </div>
   );

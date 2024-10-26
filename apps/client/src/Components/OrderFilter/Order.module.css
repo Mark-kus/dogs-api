@@ -1,0 +1,20 @@
+.orderContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 20px 0;
+}
+
+.orderSelect {
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    background-color: #f9f9f9;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.orderOption {
+    padding: 10px;
+    font-size: 16px;
+}

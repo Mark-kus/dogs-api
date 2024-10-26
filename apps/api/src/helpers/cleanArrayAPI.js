@@ -6,7 +6,7 @@ module.exports = (array) =>
             id: elem.id,
             name: elem.name,
             lifespan: elem.life_span,
-            image: elem.image.url,
+            image: elem.url,
             temperament: elem.temperament,
             created: false,
         }

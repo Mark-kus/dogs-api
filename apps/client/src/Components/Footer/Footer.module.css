@@ -9,11 +9,14 @@ footer h4 {
     margin: 16px;
 }
 
-footer div {
-    display: flex;
-    align-items: center;
-}
+footer a {
+    margin: 16px;
+    text-decoration: none;
+    color: var(--dark-green);
+    transition: color 0.3s;
+    font-weight: bold;
 
-footer img {
-    width: 80%;
+    &:hover {
+        color: var(--light-brown);
+    }
 }

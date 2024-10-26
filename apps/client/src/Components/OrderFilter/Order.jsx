@@ -2,6 +2,8 @@ import { useDispatch } from "react-redux"
 
 import orderDogs from '../../Redux/actions/dogs/orderDogs.js';
 
+import styles from './Order.module.css';
+
 export default function Order() {
     const dispatch = useDispatch();
 
@@ -10,12 +12,12 @@ export default function Order() {
     }
 
     return (
-        <div>
-            <select onChange={orderHandler} name="order" id="order">
-                <option value="NAscendente">Name ↑</option>
-                <option value="NDescendente">Name ↓</option>
-                <option value="WAscendente">Weight ↑</option>
-                <option value="WDescendente">Weight ↓</option>
+        <div className={styles.orderContainer}>
+            <select onChange={orderHandler} name="order" id="order" className={styles.orderSelect}>
+                <option value="NAscendente" className={styles.orderOption}>Name Ascending</option>
+                <option value="NDescendente" className={styles.orderOption}>Name Descending</option>
+                <option value="WAscendente" className={styles.orderOption}>Weight Ascending</option>
+                <option value="WDescendente" className={styles.orderOption}>Weight Descending</option>
             </select>
         </div>
     )

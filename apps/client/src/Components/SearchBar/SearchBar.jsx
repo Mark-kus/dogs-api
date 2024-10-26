@@ -1,22 +1,25 @@
 // SearchBar: un input de búsqueda para encontrar razas de perros por nombre.
 import styles from './SearchBar.module.css';
 
-import { useDispatch, useSelector } from 'react-redux';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 
+import { useAppDispatch, useAppSelector } from '../../Redux/hooks';
 import getDogByName from '../../Redux/actions/dogs/getDogByName';
 
 export default function Searchbar() {
-    const dispatch = useDispatch();
-    const { searchDogs } = useSelector(state => state);
+    const dispatch = useAppDispatch();
+    const { searchDogs } = useAppSelector(state => state);
     let shownList = [...searchDogs].splice(0, 8);
     const [input, setInput] = useState('');
+    const [searching, setSearching] = useState(false)
 
-    const searchHandler = (e) => {
-        setInput(e.target.value);
-        dispatch(getDogByName(e.target.value));
+    const searchHandler = async ({target:{value}}) => {
+        setSearching(true);
+        setInput(value);
+        // await dispatch(getDogByName(value));
         shownList = [...searchDogs].splice(0, 8);
+        setSearching(false);
     }
 
     const selectHandler = (e) => {
@@ -27,29 +30,36 @@ export default function Searchbar() {
         <div className={styles.searchbar}>
             <input
                 value={input}
-                placeholder='Search for breed'
-                autoComplete='off'
+                placeholder='Search for a breed'
                 onChange={searchHandler}
                 // onBlur={selectHandler}
-                id="raceName"
+                id="breed"
                 type="text"
-                name="raceName"
+                name="breed"
                 aria-autocomplete='both'
                 aria-label='Search for breed'
             />
             <ul role='listbox'
-                className={input ? '' : styles.hidden}
+                className={styles.list}
                 aria-label='Search for breed'>
-                {shownList.length ? shownList.map(dog => <Link
-                    key={dog.id}
-                    className={styles.link}
-                    to={`/dogs/${dog.id}`}
-                    role='option'
-                    onClick={selectHandler}
-                >
-                    {dog.name}
-                </Link>) : <li className={styles.linknt}>The breed doesn't exists</li>}
+                {searching ? (
+                    <li className={styles.loader}></li>
+                ) : (
+                    shownList.length ? shownList.map(dog => (
+                        <Link
+                            key={dog.id}
+                            className={styles.link}
+                            to={`/dogs/${dog.id}`}
+                            role='option'
+                            onClick={selectHandler}
+                        >
+                            {dog.name}
+                        </Link>
+                    )) : (
+                        <li className={styles.linknt}>The breed doesn't appear to exists</li>
+                    )
+                )}
             </ul>
-        </div >
+        </div>
     )
 }
