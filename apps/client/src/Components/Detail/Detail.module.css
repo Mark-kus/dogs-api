@@ -1,54 +1,85 @@
 .detail {
-    align-self: center;
-    display: flex;
-    flex-direction: column;
+  align-self: center;
+  display: flex;
+  flex-direction: column;
+  padding: 16px;
+  margin: 16px 0;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  background-color: var(--light-background);
 }
 
 @media (min-width: 800px) {
-    .detail {
-        width: 40%;
-    }
+  .detail {
+    width: 40%;
+  }
 }
 
 .detail img {
-    width: 100%;
+  width: 100%;
+  border-radius: 8px;
+  margin-bottom: 16px;
 }
 
-.detail .data {
-    background-color: var(--dark-brown);
+.data {
+  background-color: var(--dark-brown);
+  padding: 16px;
+  border-radius: 8px;
+  color: var(--white-text);
 }
 
-.detail .dogName, .detail h5 {
-    line-height: 0;
+.topData {
+    margin-bottom: 16px;
 }
 
-.detail .topData {
-    display: flex;
-    justify-content: space-evenly;
-
-    margin: 8px;
+.topData h2 {
+  font-size: x-large;
+  font-weight: bold;
+  margin-bottom: 8px;
+  line-height: 0.5;
 }
 
-.backButton {
-    box-sizing: border-box;
-    width: 100%;
-    background-color: var(--dark-brown);
-    border: none;
+.topData span {
+  font-size: small;
+  opacity: 0.8;
+}
 
-    text-decoration: none;
-    color: var(--white-text);
-    transition: background 200ms ease;
+.bottomData {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.bottomData p {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .buttons {
-    display: flex;
-    box-sizing: border-box;
-    width: 100%;
-
-    color: var(--white-text);
-    transition: background 200ms ease;
+  display: flex;
+  box-sizing: border-box;
+  width: 100%;
+  margin-bottom: 16px;
+  gap: 8px;
+  color: var(--white-text);
+  transition: background 200ms ease;
+  gap: 16px;
 }
 
-.backButton:hover {
+.button {
+  box-sizing: border-box;
+  width: 100%;
+  background-color: var(--dark-brown);
+  border: none;
+  padding: 12px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: bold;
+  font-size: medium;
+  color: var(--white-text);
+  transition: background 200ms ease;
+
+  &:hover {
     background-color: #963515;
+  }
 }

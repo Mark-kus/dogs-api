@@ -24,6 +24,14 @@
       display: block;
     }
   }
+
+  /* &:not(:placeholder-shown) {
+    background-color: #dcdcdc;
+
+    & + ul {
+      display: block;
+    }
+  } */
 }
 
 .list {
@@ -40,6 +48,10 @@
   padding: 0;
 
   display: none;
+
+  &:hover {
+    display: block;
+  }
 }
 
 .searchbar .link,

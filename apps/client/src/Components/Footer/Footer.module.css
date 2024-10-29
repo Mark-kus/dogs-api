@@ -3,6 +3,10 @@ footer {
     justify-content: space-between;
 
     background-color: var(--light-green);
+
+    position: absolute;
+    bottom: 0;
+    width: 100%;
 }
 
 footer h4 {

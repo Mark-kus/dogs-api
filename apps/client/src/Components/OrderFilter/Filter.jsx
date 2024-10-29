@@ -23,13 +23,13 @@ export default function Filter() {
     <div className={styles.filterContainer}>
       {createdDogs.length > 0 && (
         <label htmlFor="NoCreated" className={styles.label}>
-          Only created
+          Created only
           <input
             onChange={createdHandler}
             type="checkbox"
             id="NoCreated"
             className={styles.checkbox}
-          />{" "}
+          />
         </label>
       )}
       <select

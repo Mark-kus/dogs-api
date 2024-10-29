@@ -20,10 +20,21 @@
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-h1 {
+.title {
   color: white;
   font-size: 1.5em;
   margin-bottom: 20px;
+}
+
+.error { /* Errors */
+  background-color: #cc0000;
+  font-size: 0.9em;
+  margin: 0;
+  margin-bottom: 10px;
+  padding: 10px;
+  border-radius: 5px;
+  color: white;
+  text-align: center;
 }
 
 .inputGroup {
@@ -35,7 +46,6 @@ h1 {
   width: 100%;
   display: flex;
   flex-direction: column;
-  gap: 10px;
 }
 
 .numeralInputs div {
@@ -77,18 +87,37 @@ h1 {
   width: 100%;
   background-color: var(--light-green);
   box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.1);
+  margin-bottom: 10px;
 }
 
 .temp {
   color: black;
   font-size: 0.9em;
-  cursor: pointer;
   padding: 4px 8px;
   transition: background-color 0.3s;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  border-bottom: 1px solid var(--dark-green);
+
+  &:hover {
+    background-color: var(--darker-green);
+  }
 }
 
-.temp:hover {
-  background-color: rgb(255, 79, 79);
+.deleteTemp {
+  background-color: var(--dark-green);
+  color: white;
+  padding: 4px;
+  max-width: 30px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+
+  &:hover {
+    background-color: var(--light-green);
+  }
 }
 
 .label {
@@ -96,28 +125,6 @@ h1 {
   font-size: 0.9em;
   color: white;
   line-height: 1.5;
-}
-
-button {
-  width: 100%;
-  padding: 10px;
-  background-color: var(--dark-green);
-  color: var(--white-text);
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: color 0.3s, background-color 0.3s;
-  font-weight: bold;
-
-  &:hover {
-    background-color: var(--darker-green);
-  }
-}
-
-button:disabled {
-  background-color: var(--darker-green);
-  color: var(--black-text);
-  cursor: not-allowed;
 }
 
 @media (min-width: 1000px) {

@@ -8,6 +8,7 @@ import {
     FILTER_DOGS,
     PAGINATION,
     DELETE_DOG,
+    CLEAR_SEARCH,
 } from '../types';
 
 // Seteamos el estado inicial del reducer
@@ -60,6 +61,12 @@ export default function reducer(state = initialState, action) {
             return {
                 ...state,
                 searchDogs: response,
+            };
+
+        case CLEAR_SEARCH:
+            return {
+                ...state,
+                searchDogs: [],
             };
 
         case CREATE_DOG:

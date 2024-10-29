@@ -12,55 +12,44 @@ const validate = (inputs) => {
     } = inputs;
     const errors = {};
 
-    // Cada input se verifica solo si existe
     if (name) {
-        if (name.length > 20) errors.name = "The name's length must be less than 20 characters";
-        if (name.length < 2) errors.name = "The name's length must be greater than 2 characters";
-        if (!/^[a-zA-ZñÑáéíóúÁÉÍÓÚüÜ\s]+$/i.test(name)) errors.name = "The name shouldn't contain any numbers or special characters";
+        if (name.length > 20) errors.name = "Name must be less than 20 characters.";
+        if (name.length < 2) errors.name = "Name must be at least 2 characters.";
+        if (!/^[a-zA-ZñÑáéíóúÁÉÍÓÚüÜ\s]+$/i.test(name)) errors.name = "Name can only contain letters and spaces.";
     }
 
-    // A pesar de qué el input es de tipo "Number", prefiero verificarlo una vez más
-    if (minWeight || maxWeight) {
-        // Poner un maximo y un negativo
-        if (isNaN(Number(minWeight))) errors.minWeight = "The weight must be a number";
-        if (isNaN(Number(maxWeight))) errors.maxWeight = "The weight must be a number";
+    if (minWeight || minHeight || minLifespan) {
+        if (minWeight <= 0) errors.minWeight = "Minimum weight must be greater than 0 kg.";
+        if (minWeight > 100) errors.minWeight = "Minimum weight must be less than 100 kg.";        
+        if (minHeight <= 0) errors.minHeight = "Minimum height must be greater than 0 cm.";
+        if (minHeight > 100) errors.minHeight = "Minimum height must be less than 100 cm.";
+        if (minLifespan <= 1) errors.minLifespan = "Minimum lifespan must be greater than 1 year.";
+        if (minLifespan >= 40) errors.minLifespan = "Minimum lifespan must be less than 40 years.";
+        if (isNaN(Number(minWeight))) errors.minWeight = "Minimum weight must be a number.";
+        if (isNaN(Number(minHeight))) errors.minHeight = "Minimum height must be a number.";
+        if (isNaN(Number(minLifespan))) errors.minLifespan = "Minimum lifespan must be a number.";
     }
-    if (minWeight && maxWeight) {
-        if (Number(minWeight) >= Number(maxWeight)) errors.minWeight = "The maximum weight must be greater than the minimum";
-        if (minWeight <= 0) errors.minWeight = "The minimum weight should be greater than 0 kg";
-        if (maxWeight > 100) errors.maxWeight = "The maximum weight should be less than 100 kg";
-    }
-
-
-    if (minHeight || maxHeight) {
-        // Poner un maximo y un negativo
-        if (isNaN(Number(minHeight))) errors.minHeight = "The height must be a number";
-        if (isNaN(Number(maxHeight))) errors.maxHeight = "The height must be a number";
-    }
-    if (minHeight && maxHeight) {
-        if (Number(minHeight) >= Number(maxHeight)) errors.minHeight = "The maximum height must be greater than the minimum";
-        if (minHeight <= 0) errors.minHeight = "The minimum height should be greater than 0 cm";
-        if (maxHeight > 100) errors.maxHeight = "The maximum height should be less than 100 cm";
+    if (maxWeight || maxHeight || maxLifespan) {
+        if (maxWeight > 100) errors.maxWeight = "Maximum weight must be less than 100 kg.";
+        if (maxHeight > 100) errors.maxHeight = "Maximum height must be less than 100 cm.";
+        if (maxLifespan >= 40) errors.maxLifespan = "Maximum lifespan must be less than 40 years.";
+        if (isNaN(Number(maxWeight))) errors.maxWeight = "Maximum weight must be a number.";
+        if (isNaN(Number(maxHeight))) errors.maxHeight = "Maximum height must be a number.";
+        if (isNaN(Number(maxLifespan))) errors.maxLifespan = "Maximum lifespan must be a number.";
     }
 
-
-    if (minLifespan || maxLifespan) {
-        // Poner un maximo y un negativo
-        if (isNaN(Number(minLifespan))) errors.minLifespan = "The life span must be a number";
-        if (isNaN(Number(maxLifespan))) errors.maxLifespan = "The life span must be a number";
-    }
-    if (minLifespan && maxLifespan) {
-        if (Number(minLifespan) >= Number(maxLifespan)) errors.minLifespan = "The maximum lifespan must be greater than the minimum";
-        if (minLifespan <= 1) errors.minLifespan = "The minimum life span should be greater than a year";
-        if (maxLifespan >= 40) errors.maxLifespan = "The maximum life span should be less than 40 years";
+    if ((minWeight && maxWeight) || (minHeight && maxHeight) || (minLifespan && maxLifespan)) {
+        if (Number(minWeight) >= Number(maxWeight)) errors.minWeight = "Minimum weight must be less than maximum weight.";
+        if (Number(minHeight) >= Number(maxHeight)) errors.minHeight = "Minimum height must be less than maximum height.";
+        if (Number(minLifespan) >= Number(maxLifespan)) errors.minLifespan = "Minimum lifespan must be less than maximum lifespan.";
     }
 
     if (image) {
-        if (!/^(https?|ftp):\/\/[^\s/$.?#].[^\s]*$/i.test(image)) errors.image = "The image must be a valid URL";
+        if (!/^(https?|ftp):\/\/[^\s/$.?#].[^\s]*$/i.test(image)) errors.image = "Image must be a valid URL.";
     }
 
     if (!temperament.length) {
-        errors.temperament = "The dog should have at least one temperament";
+        errors.temperament = "Please select at least one temperament.";
     }
 
     return errors;

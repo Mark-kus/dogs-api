@@ -8,7 +8,7 @@ import Form from './Components/Form/Form.jsx';
 import Detail from './Components/Detail/Detail.jsx';
 
 import { Routes, Route, useLocation } from 'react-router-dom';
-import { useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { useAppDispatch } from './Redux/hooks.js'
 import getAllDogs from './Redux/actions/dogs/getAllDogs';
 import getAllTemps from './Redux/actions/temperaments/getAllTemps';
@@ -30,7 +30,7 @@ export default function App() {
   }
 
   return (
-    <div className="app">
+    <div className={`app ${pathname === '/' ? 'landing' : ''}`}>
       {pathname !== '/' && <Navbar />}
       <Routes>
         <Route path='/dogs' element={<Wraper />} />
@@ -39,7 +39,6 @@ export default function App() {
         <Route path='/' element={<Landing />} />
       </Routes>
       {pathname !== '/' && <Footer />}
-
     </div>
   );
 }

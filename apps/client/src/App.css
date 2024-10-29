@@ -1,9 +1,44 @@
 .app {
-    margin: 0;
-    margin-top: 50px;
-    min-height: 100vh;
+  min-height: 100vh;
+  height: 100%;
+  margin-top: var(--navbar-height);
+  padding-bottom: var(--footer-height);
 
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  position: relative;
+}
+
+.landing {
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+#root {
+  min-height: 100vh;
+  height: 100%;
+}
+
+button {
+  width: 100%;
+  padding: 10px;
+  background-color: var(--dark-green);
+  color: var(--white-text);
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: color 0.3s, background-color 0.3s;
+  font-weight: bold;
+
+  &:hover {
+    background-color: var(--darker-green);
+  }
+}
+
+button:disabled {
+  background-color: var(--darker-green);
+  color: var(--black-text);
+  cursor: not-allowed;
 }

@@ -1,23 +1,29 @@
-import styles from './Card.module.css';
+import styles from "./Card.module.css";
 
-import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
 
 export default function Card({ dog }) {
-    return (
-        <article>
-            <Link to={`/dogs/${dog.id}`}>
-                <img src={dog.image} className={styles.dogExample} alt={`${dog.name} example`} />
-            </Link>
+  return (
+    <article className={styles.article}>
+      <Link to={`/dogs/${dog.id}`}>
+        <picture className={styles.picture}>
+          <img
+            src={dog.image}
+            className={styles.image}
+            alt={`${dog.name} example`}
+          />
+        </picture>
+      </Link>
 
-            <h3>
-                {dog.name}
-            </h3>
+      <h3 className={styles.dogName}>{dog.name}</h3>
 
-            <div>
-                {dog.temperament ? dog.temperament : 'These dog has no temperament assigned'}
-                <br />
-                {!dog.weight.includes('NaN') ? `${dog.weight} kg` : 'Sin peso indicado'}
-            </div>
-        </article>
-    )
+      <div className={styles.info}>
+        {dog.temperament
+          ? dog.temperament
+          : "No temperament assigned"}
+        <br />
+        {!dog.weight.includes("NaN") ? `${dog.weight} kg` : "No weight assigned"}
+      </div>
+    </article>
+  );
 }

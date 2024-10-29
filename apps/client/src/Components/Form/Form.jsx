@@ -26,7 +26,7 @@ export default function Form() {
   const [errors, setErrors] = useState({
     temperament: "The dog should have at least one temperament",
   });
-  const [submitting, setSubmitting] = useState(false)
+  const [submitting, setSubmitting] = useState(false);
 
   const changeHandler = (e) => {
     const { value, name } = e.target;
@@ -34,32 +34,33 @@ export default function Form() {
       ...inputs,
       [name]: value,
     });
-    setErrors(
-      validate({
-        ...inputs,
-        [name]: value,
-      })
-    );
+    const newErrors = validate({
+      ...inputs,
+      [name]: value,
+    });
+    setErrors(newErrors);
     completedInputs(value, name);
   };
 
   const temperHandler = (e) => {
     const { value } = e.target;
-    // Si ya existe el temperamento, no hace nada
-    if (inputs.temperament.includes(value) || inputs.temperament.length === 5)
-      return;
-    // Si no, lo pasa a inputs y errors
-    setInputs({
-      ...inputs,
-      // Temperaments, es el valor ingresado, más los 4 primeros temps ya seleccionados
-      temperament: [...inputs.temperament, value],
-    });
-    setErrors(
-      validate({
+    if (inputs.temperament.includes(value)) return;
+    if (inputs.temperament.length >= 5) {
+      setInputs({
+        ...inputs,
+        temperament: [...inputs.temperament.slice(1), value],
+      });
+    } else {
+      setInputs({
         ...inputs,
         temperament: [...inputs.temperament, value],
-      })
-    );
+      });
+    }
+    const newErrors = validate({
+      ...inputs,
+      temperament: [...inputs.temperament, value],
+    });
+    setErrors(newErrors);
     completedInputs(value, "temperament");
   };
 
@@ -72,16 +73,15 @@ export default function Form() {
       ...inputs,
       temperament: [...newTemps],
     });
-    setErrors(
-      validate({
-        ...inputs,
-        temperament: [...newTemps],
-      })
-    );
+    const newErrors = validate({
+      ...inputs,
+      temperament: [...newTemps],
+    });
+    setErrors(newErrors);
   };
 
   const submitHandler = async (e) => {
-    setSubmitting(true)
+    setSubmitting(true);
     e.preventDefault();
     const response = await dispatch(
       createDog({
@@ -93,8 +93,8 @@ export default function Form() {
         temperament: inputs.temperament,
       })
     );
-    setSubmitting(false)
-    navigate(`/dogs/${response.dog_id || ''}`);
+    setSubmitting(false);
+    navigate(`/dogs/${response.dog_id || ""}`);
   };
 
   const completedInputs = (value, name) => {
@@ -110,7 +110,7 @@ export default function Form() {
   return (
     <form onSubmit={submitHandler} className={styles.createForm}>
       <div className={styles.container}>
-        <h1>Add Breed</h1>
+        <h1 className={styles.title}>Add Breed</h1>
 
         <div className={styles.inputGroup}>
           <label className={styles.label}>
@@ -122,7 +122,7 @@ export default function Form() {
               type="text"
             />
           </label>
-          <p>{errors?.name}</p>
+          {errors?.name && <p className={styles.error}>{errors.name}</p>}
         </div>
 
         <div className={styles.numeralInputs}>
@@ -147,8 +147,10 @@ export default function Form() {
                 type="number"
               />
             </label>
-            <p>{errors?.minHeight || errors?.maxHeight}</p>
           </div>
+          {(errors?.minHeight || errors?.maxHeight) && (
+            <p className={styles.error}>{errors.minHeight || errors.maxHeight}</p>
+          )}
 
           <div className={styles.inputGroup}>
             <label className={styles.label}>
@@ -171,8 +173,10 @@ export default function Form() {
                 type="number"
               />
             </label>
-            <p>{errors?.minWeight || errors?.maxWeight}</p>
           </div>
+          {(errors?.minWeight || errors?.maxWeight) && (
+            <p className={styles.error}>{errors.minWeight || errors.maxWeight}</p>
+          )}
 
           <div className={styles.inputGroup}>
             <label className={styles.label}>
@@ -195,8 +199,10 @@ export default function Form() {
                 type="number"
               />
             </label>
-            <p>{errors?.minLifespan || errors?.maxLifespan}</p>
           </div>
+          {(errors?.minLifespan || errors?.maxLifespan) && (
+            <p className={styles.error}>{errors.minLifespan || errors.maxLifespan}</p>
+          )}
         </div>
 
         <div className={styles.tempGroup}>
@@ -217,17 +223,19 @@ export default function Form() {
           </label>
           <div className={styles.tempContainer}>
             {inputs?.temperament.map((temp, i) => (
-              <span
-                key={i}
-                className={styles.temp}
-                aria-label="Delete temperament"
-                onClick={deleteTempHandler}
-              >
+              <span key={i} className={styles.temp}>
                 {temp}
+                <button
+                  className={styles.deleteTemp}
+                  aria-label="Delete temperament"
+                  onClick={deleteTempHandler}
+                >
+                  X
+                </button>
               </span>
             ))}
           </div>
-          <p>{errors?.temperament}</p>
+          {errors?.temperament && <p className={styles.error}>{errors.temperament}</p>}
         </div>
 
         <div className={styles.inputGroup}>
@@ -240,16 +248,12 @@ export default function Form() {
               type="text"
             />
           </label>
-          <p>{errors?.image}</p>
+          {errors?.image && <p className={styles.error}>{errors.image}</p>}
         </div>
 
         <button
-          disabled={!(Object.values(errors).length === 0 && completed)}
-          className={
-            Object.values(errors).length && completed
-              ? styles.submit
-              : styles.disabled
-          }
+          disabled={!(Object.values(errors).length === 0 && completed) || submitting}
+          className={`${styles.button} ${Object.values(errors).length && completed ? styles.submit : styles.disabled}`}
           type="submit"
         >
           Submit dog
