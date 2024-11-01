@@ -9,20 +9,21 @@ import Detail from './Components/Detail/Detail.jsx';
 
 import { Routes, Route, useLocation } from 'react-router-dom';
 import React, { useEffect } from 'react';
-import { useAppDispatch } from './Redux/hooks.js'
+import { useAppDispatch, useAppSelector } from './Redux/hooks.js'
 import getAllDogs from './Redux/actions/dogs/getAllDogs';
 import getAllTemps from './Redux/actions/temperaments/getAllTemps';
 import getDogById from './Redux/actions/dogs/getDogById';
 
 export default function App() {
   const dispatch = useAppDispatch();
+  const {allDogs, allTemps} = useAppSelector(state => state);
   const location = useLocation();
   const { pathname } = location;
 
   useEffect(() => {
-    dispatch(getAllTemps());
-    dispatch(getAllDogs());
-  }, [dispatch]);
+    if (!allDogs.length) dispatch(getAllTemps());
+    if (!allTemps.length) dispatch(getAllDogs());
+  }, [dispatch, location, allDogs.length, allTemps.length]);
 
   if (pathname.includes('/dogs/')) {
     const id = pathname.slice(6);

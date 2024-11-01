@@ -56,8 +56,7 @@ export default function Detail() {
             alt={`${detailDog.name} example`}
             onError={(e) => {
               e.target.onerror = null;
-              e.target.src =
-                "https://cdn.vectorstock.com/i/preview-1x/14/29/mixed-breed-silhouette-vector-5381429.jpg";
+              e.target.src = "/images/placeholder-dog.png";
             }}
           />
 

@@ -11,6 +11,12 @@
   gap: 20px;
 
   @media screen and (min-width: 600px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  @media screen and (min-width: 900px) {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  @media screen and (min-width: 1200px) {
     grid-template-columns: repeat(4, 1fr);
   }
 }
@@ -61,7 +67,7 @@
   display: none;
 }
 
-@media screen and (min-width: 600px) {
+@media screen and (min-width: 800px) {
   .finalPagination {
     display: block;
   }

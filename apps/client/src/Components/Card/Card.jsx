@@ -8,9 +8,13 @@ export default function Card({ dog }) {
       <Link to={`/dogs/${dog.id}`}>
         <picture className={styles.picture}>
           <img
-            src={dog.image}
+            src={dog?.image}
             className={styles.image}
             alt={`${dog.name} example`}
+            onError={(e) => {
+              e.target.onerror = null;
+              e.target.src = "/images/placeholder-dog.png";
+            }}
           />
         </picture>
       </Link>
@@ -18,11 +22,11 @@ export default function Card({ dog }) {
       <h3 className={styles.dogName}>{dog.name}</h3>
 
       <div className={styles.info}>
-        {dog.temperament
-          ? dog.temperament
-          : "No temperament assigned"}
+        {dog.temperament ? dog.temperament : "No temperament assigned"}
         <br />
-        {!dog.weight.includes("NaN") ? `${dog.weight} kg` : "No weight assigned"}
+        {!dog.weight.includes("NaN")
+          ? `${dog.weight} kg`
+          : "No weight assigned"}
       </div>
     </article>
   );

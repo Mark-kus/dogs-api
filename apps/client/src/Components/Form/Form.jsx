@@ -23,10 +23,18 @@ export default function Form() {
     temperament: [],
     image: "",
   });
-  const [errors, setErrors] = useState({
-    temperament: "The dog should have at least one temperament",
-  });
+  const [errors, setErrors] = useState({});
   const [submitting, setSubmitting] = useState(false);
+  const [showTemperaments, setShowTemperaments] = useState([]);
+
+  const searchTemper = (e) => {
+    const { value } = e.target;
+    const temps = allTemps.filter((temp) =>
+      temp.toLowerCase().includes(value.toLowerCase())
+    );
+    if (value.length === 0) setShowTemperaments([]);
+    else setShowTemperaments(temps);
+  };
 
   const changeHandler = (e) => {
     const { value, name } = e.target;
@@ -42,30 +50,26 @@ export default function Form() {
     completedInputs(value, name);
   };
 
-  const temperHandler = (e) => {
-    const { value } = e.target;
+  const temperHandler = (value) => {
     if (inputs.temperament.includes(value)) return;
-    if (inputs.temperament.length >= 5) {
-      setInputs({
-        ...inputs,
-        temperament: [...inputs.temperament.slice(1), value],
-      });
-    } else {
+
       setInputs({
         ...inputs,
         temperament: [...inputs.temperament, value],
       });
-    }
+    
     const newErrors = validate({
       ...inputs,
       temperament: [...inputs.temperament, value],
     });
     setErrors(newErrors);
     completedInputs(value, "temperament");
+    // Delete input text
+    document.querySelector('input[name="temperament"]').value = "";
+    setShowTemperaments([]);
   };
 
-  const deleteTempHandler = (e) => {
-    const deleteTemp = e.target.innerText;
+  const deleteTempHandler = (deleteTemp) => {
     const newTemps = [
       ...inputs.temperament.filter((temp) => temp !== deleteTemp),
     ];
@@ -149,7 +153,9 @@ export default function Form() {
             </label>
           </div>
           {(errors?.minHeight || errors?.maxHeight) && (
-            <p className={styles.error}>{errors.minHeight || errors.maxHeight}</p>
+            <p className={styles.error}>
+              {errors.minHeight || errors.maxHeight}
+            </p>
           )}
 
           <div className={styles.inputGroup}>
@@ -175,7 +181,9 @@ export default function Form() {
             </label>
           </div>
           {(errors?.minWeight || errors?.maxWeight) && (
-            <p className={styles.error}>{errors.minWeight || errors.maxWeight}</p>
+            <p className={styles.error}>
+              {errors.minWeight || errors.maxWeight}
+            </p>
           )}
 
           <div className={styles.inputGroup}>
@@ -201,26 +209,30 @@ export default function Form() {
             </label>
           </div>
           {(errors?.minLifespan || errors?.maxLifespan) && (
-            <p className={styles.error}>{errors.minLifespan || errors.maxLifespan}</p>
+            <p className={styles.error}>
+              {errors.minLifespan || errors.maxLifespan}
+            </p>
           )}
         </div>
 
         <div className={styles.tempGroup}>
-          <label className={styles.label}>
-            Temperaments
-            <select onChange={temperHandler} name="temperament">
-              <option value="" hidden>
-                Select up to 5 temperaments
-              </option>
-              {allTemps.map((temper, i) => {
-                return (
-                  <option key={i} value={temper}>
-                    {temper}
-                  </option>
-                );
-              })}
-            </select>
-          </label>
+          <label className={styles.label}>Temperaments</label>
+          <input disabled={inputs?.temperament.length >= 5} onChange={searchTemper} name="temperament" />
+          <ul className={styles.tempList}>
+          {showTemperaments.map((temper, i) => {
+            return (
+              <li
+                onClick={() => temperHandler(temper)}
+                key={i}
+                value={temper}
+              >
+                {temper}
+              </li>
+            );
+          })}
+          </ul>
+
+        </div>
           <div className={styles.tempContainer}>
             {inputs?.temperament.map((temp, i) => (
               <span key={i} className={styles.temp}>
@@ -228,16 +240,17 @@ export default function Form() {
                 <button
                   className={styles.deleteTemp}
                   aria-label="Delete temperament"
-                  onClick={deleteTempHandler}
+                  onClick={() => deleteTempHandler(temp)}
+                  type="button"
                 >
                   X
                 </button>
               </span>
             ))}
           </div>
-          {errors?.temperament && <p className={styles.error}>{errors.temperament}</p>}
-        </div>
-
+          {errors?.temperament && (
+            <p className={styles.error}>{errors.temperament}</p>
+          )}
         <div className={styles.inputGroup}>
           <label className={styles.label}>
             Image URL
@@ -252,12 +265,19 @@ export default function Form() {
         </div>
 
         <button
-          disabled={!(Object.values(errors).length === 0 && completed) || submitting}
-          className={`${styles.button} ${Object.values(errors).length && completed ? styles.submit : styles.disabled}`}
+          disabled={
+            !(Object.values(errors).length === 0 && completed) || submitting
+          }
+          className={`${styles.button} ${
+            Object.values(errors).length && completed
+              ? styles.submit
+              : styles.disabled
+          }`}
           type="submit"
         >
           Submit dog
         </button>
+      <p>The amount of breeds allowed to create is limited to 10, to avoid abuse.</p>
       </div>
     </form>
   );
