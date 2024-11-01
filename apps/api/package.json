@@ -17,9 +17,12 @@
     "body-parser": "^1.19.0",
     "cookie-parser": "^1.4.5",
     "cors": "^2.8.5",
+    "dogs-api": "file:../..",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
+    "npm": "^10.9.0",
     "pg": "^8.5.1",
-    "sequelize": "^6.3.5"
+    "sequelize": "^6.3.5",
+    "start": "^5.1.0"
   }
 }
