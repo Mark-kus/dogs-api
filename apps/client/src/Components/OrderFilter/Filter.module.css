@@ -1,7 +1,10 @@
 .filterContainer {
   display: flex;
   align-items: center;
-  margin: 20px 0;
+
+  @media screen and (max-width: 712px) {
+    display: none;
+  }
 }
 
 .label {
@@ -13,8 +16,6 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-
-  margin-right: 20px;
 }
 
 .checkbox {
@@ -30,6 +31,8 @@
   background-color: #f9f9f9;
   cursor: pointer;
   border-radius: 5px;
+
+  width: 180px;
 }
 
 .option {

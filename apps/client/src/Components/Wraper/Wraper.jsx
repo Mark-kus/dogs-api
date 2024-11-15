@@ -96,6 +96,7 @@ export default function Wraper() {
           ))}
         </section>
       )}
+      <div className={styles.orderFilter}>
       <Pagination
         startHandler={startHandler}
         prevHandler={prevHandler}
@@ -105,6 +106,7 @@ export default function Wraper() {
         disableNext={currentPage * itemsPerPage >= dogsQty}
         disablePrev={currentPage === 1}
       />
+      </div>
     </div>
   );
 }

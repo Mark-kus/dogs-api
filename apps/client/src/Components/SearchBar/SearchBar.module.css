@@ -4,7 +4,8 @@
   align-items: center;
   position: relative;
 
-  width: 15%;
+  width: 40%;
+  max-width: 200px;
   background: #e8f0fb;
 }
 
@@ -60,7 +61,7 @@
   text-decoration: none;
   color: var(--black-text);
   padding: 6px 12px;
-  transition: 0.2s background;
+  transition: 0.2s background-color ease-in-out;
   cursor: pointer;
 }
 

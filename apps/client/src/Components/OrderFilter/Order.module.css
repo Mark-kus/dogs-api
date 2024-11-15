@@ -2,6 +2,10 @@
     display: flex;
     justify-content: center;
     align-items: center;
+
+    @media screen and (max-width: 712px) {
+        display: none;
+    }
 }
 
 .orderSelect {
@@ -11,6 +15,8 @@
     background-color: #f9f9f9;
     cursor: pointer;
     border-radius: 5px;
+
+    width: 180px;
 }
 
 .orderOption {

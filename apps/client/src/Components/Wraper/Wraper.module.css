@@ -35,15 +35,11 @@
   margin: 20px 0;
 }
 
-.orderFilter div {
-  width: 120px;
-}
-
 .pagination button {
   color: white;
   padding: 10px 15px;
   background-color: var(--dark-brown);
-  transition: background 300ms ease, color 300ms ease;
+  transition: background-color 300ms ease, color 300ms ease;
 
   margin: 0 5px;
   max-width: 100px;
@@ -61,10 +57,6 @@
 .paginationText {
   margin: 0 10px;
   text-wrap: nowrap;
-}
-
-.finalPagination {
-  display: none;
 }
 
 @media screen and (min-width: 800px) {

@@ -23,12 +23,12 @@ export default function App() {
   useEffect(() => {
     if (!allDogs.length) dispatch(getAllTemps());
     if (!allTemps.length) dispatch(getAllDogs());
+    if (pathname.includes('/dogs/')) {
+      const id = pathname.slice(6);
+      dispatch(getDogById(id));
+    }
   }, [dispatch, location, allDogs.length, allTemps.length]);
 
-  if (pathname.includes('/dogs/')) {
-    const id = pathname.slice(6);
-    dispatch(getDogById(id));
-  }
 
   return (
     <div className={`app ${pathname === '/' ? 'landing' : ''}`}>

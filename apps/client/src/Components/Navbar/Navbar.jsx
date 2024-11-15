@@ -18,7 +18,7 @@ export default function Navbar() {
         className={({ isActive }) => (isActive ? styles.active : styles.links)}
         to="/new"
       >
-        New Breed
+        New
       </NavLink>
 
       <Searchbar />

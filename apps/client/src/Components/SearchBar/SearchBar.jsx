@@ -64,7 +64,9 @@ export default function Searchbar() {
         aria-label="Search for breed"
       />
       <ul role="listbox" className={styles.list} aria-label="Search for breed">
-        {searching ? (
+        {!input ? (
+          <li className={styles.linknt}>Start typing to find breeds!</li>
+        ) : searching ? (
           <li className={styles.loader}></li>
         ) : shownList.length ? (
           shownList.map((dog) => (
@@ -79,7 +81,7 @@ export default function Searchbar() {
             </Link>
           ))
         ) : (
-          <li className={styles.linknt}>The breed doesn't appear to exists</li>
+          <li className={styles.linknt}>No breeds found, try again!</li>
         )}
       </ul>
     </div>

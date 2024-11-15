@@ -8,12 +8,7 @@ module.exports = async (req, res) => {
     try {
         // Limite de 10 perros creados en base de datos
         const dogCount = await Dog.countDocuments();
-        if (dogCount >= 10) {
-            const oldestDog = await Dog.findOne().sort({ created_at: 1 });
-            if (oldestDog) {
-                await oldestDog.remove();
-            }
-        }
+        if (dogCount >= 10) res.status(400).json({ error: 'No se pueden crear más de 10 perros' });
         const newDog = await createDog(name, image, height, weight, lifespan, temperament);
         res.status(201).json(newDog);
     } catch (e) {

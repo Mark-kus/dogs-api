@@ -2,7 +2,7 @@ import styles from "./Detail.module.css";
 import Loader from "../Loader/Loader";
 import deleteDog from "../../Redux/actions/dogs/deleteDog";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 
@@ -12,21 +12,19 @@ export default function Detail() {
   const { detailDog } = useSelector((state) => state);
   const [load, setLoad] = useState(false);
 
-  
   const [minWeight, maxWeight] = detailDog.weight
     ? detailDog.weight.split(" - ")
     : ["", ""];
-    const [minHeight, maxHeight] = detailDog.height
+  const [minHeight, maxHeight] = detailDog.height
     ? detailDog.height.split(" - ")
     : ["", ""];
   const [minLifeSpan, maxLifeSpan] = detailDog.lifespan
     ? detailDog.lifespan.split(" - ")
     : ["", ""];
-  console.log(detailDog, minLifeSpan, maxLifeSpan);
 
-  setTimeout(() => {
-    setLoad(true);
-  }, 1000);
+  useEffect(() => {
+    if (detailDog.id) setLoad(true);
+  }, [detailDog]);
 
   const deleteCard = () => {
     dispatch(deleteDog(detailDog.id));
@@ -78,7 +76,8 @@ export default function Detail() {
                 Life span
                 <div>
                   <span>
-                    {minLifeSpan}{minLifeSpan.includes("years") ? "" : " years"}
+                    {minLifeSpan}
+                    {minLifeSpan.includes("years") ? "" : " years"}
                   </span>
                   {maxLifeSpan && (
                     <span>
