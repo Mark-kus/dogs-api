@@ -39,7 +39,7 @@
   color: white;
   padding: 10px 15px;
   background-color: var(--dark-brown);
-  transition: background-color 300ms ease, color 300ms ease;
+  transition: background-color 300ms ease, color 300ms ease, opacity 300ms ease;
 
   margin: 0 5px;
   max-width: 100px;
@@ -50,7 +50,7 @@
 
   &:disabled {
     background-color: var(--dark-brown);
-    opacity: 0.8;
+    opacity: 0.4;
   }
 }
 

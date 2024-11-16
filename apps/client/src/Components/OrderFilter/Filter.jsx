@@ -5,82 +5,73 @@ import { useAppDispatch, useAppSelector } from "../../Redux/hooks";
 import filterDogs from "../../Redux/actions/dogs/filterDogs";
 
 import styles from "./Filter.module.css";
+import { modifyQueryFromURL } from "./utils";
 
 export default function Filter() {
   const dispatch = useAppDispatch();
-  const { allTemps, createdDogs, allDogs } = useAppSelector((state) => state);
+  const allTemps = useAppSelector((state) => state.allTemps);
+  const createdDogs = useAppSelector((state) => state.createdDogs);
+  const allDogs = useAppSelector((state) => state.allDogs);
   const [created, setCreated] = useState(false);
+  const [selected, setSelected] = useState("Show all");
   const location = useLocation();
 
   useEffect(() => {
     const queryParams = new URLSearchParams(location.search);
-    const order = queryParams.get("order");
-    if (order && allDogs.length) {
-      dispatch(filterDogs(order));
+    const filter = queryParams.get("filter");
+    const created = queryParams.get("created") === "true";
+
+    if (created) setCreated(created);
+    if (filter) setSelected(filter);
+    if ((filter || created) && allDogs.length) {
+      dispatch(filterDogs(filter, created));
     }
   }, [location.search, dispatch, allDogs.length]);
 
-  const modifyURL = (key, value) => {
-    if (!value) {
-      const queryParams = new URLSearchParams(location.search);
-      queryParams.delete(key);
-      window.history.pushState(
-        null,
-        "",
-        `${location.pathname}?${queryParams.toString()}`
-      );
-      return;
-    }
-
-    const queryParams = new URLSearchParams(location.search);
-    queryParams.set(key, value);
-    window.history.pushState(
-      null,
-      "",
-      `${location.pathname}?${queryParams.toString()}`
-    );
-  };
-
   const createdHandler = () => {
+    const newCreatedValue = !created;
     // Modifica la URL
-    if (!created) {
-      modifyURL("created", "true");
+    if (newCreatedValue) {
+      modifyQueryFromURL("created", "true");
     } else {
-      modifyURL("created", false);
+      modifyQueryFromURL("created", false);
     }
 
-    setCreated(!created);
-    dispatch(filterDogs("rerender", !created));
+    setCreated(!newCreatedValue);
+    dispatch(filterDogs("rerender", !newCreatedValue));
   };
 
-  const filterHandler = (e) => {
+  const filterHandler = ({ target: { value } }) => {
     // Modifica la URL
-    if (e.target.value !== "Show all") {
-      modifyURL("filter", e.target.value);
+    if (value === "Show all") {
+      modifyQueryFromURL("filter", false);
     } else {
-      modifyURL("filter", false);
+      modifyQueryFromURL("filter", value);
     }
 
-    dispatch(filterDogs(e.target.value, created));
+    dispatch(filterDogs(value, created));
+    setSelected(value);
   };
 
   return (
     <div className={styles.filterContainer}>
       {createdDogs.length > 0 && (
         <label htmlFor="NoCreated" className={styles.label}>
-          Created only
           <input
             onChange={createdHandler}
             type="checkbox"
             id="NoCreated"
+            checked={created}
             className={styles.checkbox}
           />
+          Created only
         </label>
       )}
       <select
         onChange={filterHandler}
         name="filter"
         id="filter"
+        value={selected}
         className={styles.select}
       >
         <option value="Show all">Show all</option>

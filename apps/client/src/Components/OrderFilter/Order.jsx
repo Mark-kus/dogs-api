@@ -1,45 +1,39 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 
 import { useAppDispatch, useAppSelector } from "../../Redux/hooks.js";
 import orderDogs from "../../Redux/actions/dogs/orderDogs.js";
 
 import styles from "./Order.module.css";
+import { modifyQueryFromURL } from "./utils.js";
 
 export default function Order() {
   const dispatch = useAppDispatch();
-  const { allDogs } = useAppSelector((state) => state);
+  const allDogs = useAppSelector((state) => state.allDogs);
   const location = useLocation();
+  const [selected, setSelected] = useState("NAscendente");
 
   useEffect(() => {
     const queryParams = new URLSearchParams(location.search);
     const order = queryParams.get("order");
-    if (order && allDogs.length) {
-      dispatch(orderDogs(order));
+    if (order) {
+      setSelected(order);
+      if (allDogs.length) {
+        dispatch(orderDogs(order));
+      }
     }
   }, [location.search, dispatch, allDogs.length]);
 
-  const orderHandler = (e) => {
+  const orderHandler = ({ target: { value } }) => {
     // Modifica la URL
-    if (e.target.value !== "NAscendente") {
-      const queryParams = new URLSearchParams(location.search);
-      queryParams.set("order", e.target.value);
-      window.history.pushState(
-        null,
-        "",
-        `${location.pathname}?${queryParams.toString()}`
-      );
+    if (value !== "NAscendente") {
+      modifyQueryFromURL("order", value);
     } else {
-      const queryParams = new URLSearchParams(location.search);
-      queryParams.delete("order");
-      window.history.pushState(
-        null,
-        "",
-        `${location.pathname}?${queryParams.toString()}`
-      );
+      modifyQueryFromURL("order", false);
     }
 
-    dispatch(orderDogs(e.target.value));
+    setSelected(value);
+    dispatch(orderDogs(value));
   };
 
   return (
@@ -49,6 +43,7 @@ export default function Order() {
         name="order"
         id="order"
         className={styles.orderSelect}
+        value={selected}
       >
         <option value="NAscendente" className={styles.orderOption}>
           Name Ascending

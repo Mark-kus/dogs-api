@@ -1,6 +1,7 @@
 .filterContainer {
   display: flex;
   align-items: center;
+  flex-direction: column;
 
   @media screen and (max-width: 712px) {
     display: none;
@@ -12,16 +13,33 @@
   font-weight: bold;
   width: 100px;
   text-wrap: nowrap;
+  cursor: pointer;
   
   display: flex;
-  flex-direction: column;
   align-items: center;
+  margin-right: 16px; /* Same as the size of the checkbox */
 }
 
 .checkbox {
+  height: 16px;
   cursor: pointer;
-  width: 20px;
-  height: 20px;
+  accent-color: var(--dark-green);
+  border: 2px solid #ccc;
+  border-radius: 4px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  &:checked {
+    background-color: var(--dark-green);
+    border-color: var(--dark-green);
+  }
+
+  &:checked::after {
+    content: '✔';
+    color: white;
+    font-size: 14px;
+  }
 }
 
 .select {

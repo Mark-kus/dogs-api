@@ -6,7 +6,7 @@ import Order from "../OrderFilter/Order.jsx";
 import pagination from "../../Redux/actions/dogs/pagination";
 import Loader from "../Loader/Loader";
 
-import { useDispatch, useSelector } from "react-redux";
+import { useAppDispatch, useAppSelector } from "../../Redux/hooks.js";
 
 function Pagination({
   startHandler,
@@ -45,10 +45,12 @@ function Pagination({
 }
 
 export default function Wraper() {
-  const { shownDogs, currentPage, itemsPerPage, dogsQty } = useSelector(
-    (state) => state
-  );
-  const dispatch = useDispatch();
+  const shownDogs = useAppSelector((state) => state.shownDogs);
+  const currentPage = useAppSelector((state) => state.currentPage);
+  const itemsPerPage = useAppSelector((state) => state.itemsPerPage);
+  const dogsQty = useAppSelector((state) => state.dogsQty);
+  const fetching = useAppSelector((state) => state.fetching);
+  const dispatch = useAppDispatch();
 
   // Página inicial
   const startHandler = () => {
@@ -87,25 +89,27 @@ export default function Wraper() {
         />
         <Filter />
       </div>
-      {shownDogs.length === 0 ? (
+      {fetching ? (
         <Loader />
-      ) : (
+      ) : shownDogs.length > 0 ? (
         <section>
           {shownDogs.map((dog) => (
             <Card key={dog.id} dog={dog} />
           ))}
         </section>
+      ) : (
+        <h1>No dogs found</h1>
       )}
       <div className={styles.orderFilter}>
-      <Pagination
-        startHandler={startHandler}
-        prevHandler={prevHandler}
-        nextHandler={nextHandler}
-        endHandler={endHandler}
-        currentPage={currentPage}
-        disableNext={currentPage * itemsPerPage >= dogsQty}
-        disablePrev={currentPage === 1}
-      />
+        <Pagination
+          startHandler={startHandler}
+          prevHandler={prevHandler}
+          nextHandler={nextHandler}
+          endHandler={endHandler}
+          currentPage={currentPage}
+          disableNext={currentPage * itemsPerPage >= dogsQty}
+          disablePrev={currentPage === 1}
+        />
       </div>
     </div>
   );

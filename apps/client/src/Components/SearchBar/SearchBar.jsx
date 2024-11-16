@@ -10,7 +10,7 @@ import clearSearch from "../../Redux/actions/dogs/clearSearch";
 
 export default function Searchbar() {
   const dispatch = useAppDispatch();
-  const { searchDogs } = useAppSelector((state) => state);
+  const searchDogs = useAppSelector((state) => state.searchDogs);
   let shownList = [...searchDogs].splice(0, 8);
   const [input, setInput] = useState("");
   const [searching, setSearching] = useState(false);

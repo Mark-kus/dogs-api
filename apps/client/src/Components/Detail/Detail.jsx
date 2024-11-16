@@ -9,7 +9,7 @@ import { Link, useNavigate } from "react-router-dom";
 export default function Detail() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { detailDog } = useSelector((state) => state);
+  const detailDog = useSelector((state) => state.detailDog);
   const [load, setLoad] = useState(false);
 
   const [minWeight, maxWeight] = detailDog.weight

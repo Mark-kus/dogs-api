@@ -8,3 +8,4 @@ export const FILTER_DOGS = "FILTER_DOGS";
 export const PAGINATION = 'PAGINATION';
 export const DELETE_DOG = 'DELETE_DOG';
 export const CLEAR_SEARCH = 'CLEAR_SEARCH';
+export const TOGGLE_FETCHING = 'TOGGLE_FETCHING';

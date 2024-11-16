@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { useAppDispatch, useAppSelector } from "../../Redux/hooks.js";
@@ -10,7 +10,7 @@ import createDog from "../../Redux/actions/dogs/createDog.js";
 export default function Form() {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const { allTemps } = useAppSelector((state) => state);
+  const allTemps = useAppSelector((state) => state.allTemps);
   const [completed, setCompleted] = useState(false);
   const [inputs, setInputs] = useState({
     name: "",
@@ -25,7 +25,11 @@ export default function Form() {
   });
   const [errors, setErrors] = useState({});
   const [submitting, setSubmitting] = useState(false);
+  const [submitted, setSubmitted] = useState(false);
   const [showTemperaments, setShowTemperaments] = useState([]);
+  const inputRef = useRef(null);
+  const liRefs = useRef([]);
+  const deleteButtonRefs = useRef([]);
 
   const searchTemper = (e) => {
     const { value } = e.target;
@@ -42,27 +46,31 @@ export default function Form() {
       ...inputs,
       [name]: value,
     });
-    const newErrors = validate({
-      ...inputs,
-      [name]: value,
-    });
-    setErrors(newErrors);
+    if (submitted) {
+      const newErrors = validate({
+        ...inputs,
+        [name]: value,
+      });
+      setErrors(newErrors);
+    }
     completedInputs(value, name);
   };
 
   const temperHandler = (value) => {
     if (inputs.temperament.includes(value)) return;
 
-      setInputs({
-        ...inputs,
-        temperament: [...inputs.temperament, value],
-      });
-    
-    const newErrors = validate({
+    setInputs({
       ...inputs,
       temperament: [...inputs.temperament, value],
     });
-    setErrors(newErrors);
+
+    if (submitted) {
+      const newErrors = validate({
+        ...inputs,
+        temperament: [...inputs.temperament, value],
+      });
+      setErrors(newErrors);
+    }
     completedInputs(value, "temperament");
     // Delete input text
     document.querySelector('input[name="temperament"]').value = "";
@@ -77,6 +85,7 @@ export default function Form() {
       ...inputs,
       temperament: [...newTemps],
     });
+    if (!submitted) return;
     const newErrors = validate({
       ...inputs,
       temperament: [...newTemps],
@@ -85,20 +94,28 @@ export default function Form() {
   };
 
   const submitHandler = async (e) => {
-    setSubmitting(true);
     e.preventDefault();
-    const response = await dispatch(
-      createDog({
-        name: inputs.name,
-        height: `${inputs.minHeight} - ${inputs.maxHeight}`,
-        weight: `${inputs.minWeight} - ${inputs.maxWeight}`,
-        lifespan: `${inputs.minLifespan} - ${inputs.maxLifespan}`,
-        image: inputs.image,
-        temperament: inputs.temperament,
-      })
-    );
-    setSubmitting(false);
-    navigate(`/dogs/${response.dog_id || ""}`);
+    setSubmitted(true);
+    setErrors(validate(inputs));
+    if (Object.values(validate(inputs)).length) return;
+    setSubmitting(true);
+    try {
+      const response = await dispatch(
+        createDog({
+          name: inputs.name,
+          height: `${inputs.minHeight} - ${inputs.maxHeight}`,
+          weight: `${inputs.minWeight} - ${inputs.maxWeight}`,
+          lifespan: `${inputs.minLifespan} - ${inputs.maxLifespan}`,
+          image: inputs.image,
+          temperament: inputs.temperament,
+        })
+      );
+      navigate(`/dogs/${response.id || ""}`);
+    } catch (error) {
+      console.log(error)
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   const completedInputs = (value, name) => {
@@ -110,6 +127,40 @@ export default function Form() {
     if ([...completes].every(Boolean)) setCompleted(true);
     else setCompleted(false);
   };
+
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (e.key === "Tab" && inputRef.current === document.activeElement) {
+        e.preventDefault();
+        if (liRefs.current.length > 0 && liRefs.current[0]) {
+          liRefs.current[0].focus();
+        } else if (
+          deleteButtonRefs.current.length > 0 &&
+          deleteButtonRefs.current[0]
+        ) {
+          deleteButtonRefs.current[0].focus();
+        }
+      }
+    };
+
+    const handleEnterKey = (e) => {
+      if (e.key === "Enter" && document.activeElement.tagName === "LI") {
+        e.preventDefault();
+        const index = liRefs.current.indexOf(document.activeElement);
+        if (index !== -1) {
+          temperHandler(showTemperaments[index]);
+        }
+      }
+    };
+
+    document.addEventListener("keydown", handleKeyDown);
+    document.addEventListener("keydown", handleEnterKey);
+
+    return () => {
+      document.removeEventListener("keydown", handleKeyDown);
+      document.removeEventListener("keydown", handleEnterKey);
+    };
+  }, [showTemperaments]);
 
   return (
     <form onSubmit={submitHandler} className={styles.createForm}>
@@ -217,40 +268,47 @@ export default function Form() {
 
         <div className={styles.tempGroup}>
           <label className={styles.label}>Temperaments</label>
-          <input disabled={inputs?.temperament.length >= 5} onChange={searchTemper} name="temperament" />
+          <input
+            ref={inputRef}
+            disabled={inputs?.temperament.length >= 5}
+            onChange={searchTemper}
+            name="temperament"
+          />
           <ul className={styles.tempList}>
-          {showTemperaments.map((temper, i) => {
-            return (
-              <li
-                onClick={() => temperHandler(temper)}
-                key={i}
-                value={temper}
-              >
-                {temper}
-              </li>
-            );
-          })}
-          </ul>
-
-        </div>
-          <div className={styles.tempContainer}>
-            {inputs?.temperament.map((temp, i) => (
-              <span key={i} className={styles.temp}>
-                {temp}
-                <button
-                  className={styles.deleteTemp}
-                  aria-label="Delete temperament"
-                  onClick={() => deleteTempHandler(temp)}
-                  type="button"
+            {showTemperaments.map((temper, i) => {
+              return (
+                <li
+                  onClick={() => temperHandler(temper)}
+                  key={i}
+                  value={temper}
+                  ref={(el) => (liRefs.current[i] = el)}
+                  tabIndex="0"
                 >
-                  X
-                </button>
-              </span>
-            ))}
-          </div>
-          {errors?.temperament && (
-            <p className={styles.error}>{errors.temperament}</p>
-          )}
+                  {temper}
+                </li>
+              );
+            })}
+          </ul>
+        </div>
+        <div className={styles.tempContainer}>
+          {inputs?.temperament.map((temp, i) => (
+            <span key={i} className={styles.temp}>
+              {temp}
+              <button
+                ref={(el) => (deleteButtonRefs.current[i] = el)}
+                className={styles.deleteTemp}
+                aria-label="Delete temperament"
+                onClick={() => deleteTempHandler(temp)}
+                type="button"
+              >
+                X
+              </button>
+            </span>
+          ))}
+        </div>
+        {errors?.temperament && (
+          <p className={styles.error}>{errors.temperament}</p>
+        )}
         <div className={styles.inputGroup}>
           <label className={styles.label}>
             Image URL
@@ -277,7 +335,10 @@ export default function Form() {
         >
           Submit dog
         </button>
-      <p>The amount of breeds allowed to create is limited to 10, to avoid abuse.</p>
+        <p>
+          The amount of breeds allowed to create is limited to 10, to avoid
+          abuse.
+        </p>
       </div>
     </form>
   );

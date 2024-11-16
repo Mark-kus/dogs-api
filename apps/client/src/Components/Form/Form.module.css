@@ -71,11 +71,23 @@
 
 .tempList {
   list-style-type: none;
-  padding: 0;
+  padding: 0 2px 0 0;
   margin: 0;
   width: 100%;
   max-height: 200px;
   overflow-y: auto;
+  margin-bottom: 10px;
+
+  &::-webkit-scrollbar {
+    width: 10px;
+    background-color: var(--light-green);
+    border-radius: 5px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: var(--dark-green);
+    border-radius: 5px;
+  }
 }
 
 .tempList li {
@@ -91,6 +103,10 @@
   &:hover {
     background-color: var(--darker-green);
     color: white;
+  }
+  &:focus {
+    outline: solid 3px var(--light-brown);
+    outline-offset: -3px;
   }
 }
 
@@ -114,6 +130,7 @@
   background-color: var(--light-green);
   box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.1);
   margin-bottom: 10px;
+  border-radius: 5px;
 }
 
 .temp {
@@ -131,6 +148,16 @@
   &:hover {
     background-color: var(--darker-green);
   }
+
+  &:first-child {
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+  }
+
+  &:last-child {
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+  }
 }
 
 .deleteTemp {
@@ -143,6 +170,10 @@
 
   &:hover {
     background-color: var(--light-green);
+  }
+
+  &:focus {
+    outline: solid 2px var(--darker-green);
   }
 }
 
