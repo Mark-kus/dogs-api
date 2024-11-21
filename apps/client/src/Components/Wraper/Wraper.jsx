@@ -82,23 +82,31 @@ export default function Wraper() {
   // Página inicial
   const startHandler = () => {
     dispatch(pagination("start"));
+    scrollToTop();
   };
 
   // Página final
   const endHandler = () => {
     dispatch(pagination("end"));
+    scrollToTop();
   };
 
   // Página anterior
   const prevHandler = () => {
     if (currentPage === 1) return;
     dispatch(pagination("prev"));
+    scrollToTop();
   };
 
   // Página siguiente
   const nextHandler = () => {
     if (currentPage * itemsPerPage >= dogsQty) return;
     dispatch(pagination("next"));
+    scrollToTop();
+  };
+
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
   return (
