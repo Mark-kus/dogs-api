@@ -37,8 +37,8 @@ export default function Filter() {
       modifyQueryFromURL("created", false);
     }
 
-    setCreated(!newCreatedValue);
-    dispatch(filterDogs("rerender", !newCreatedValue));
+    setCreated(newCreatedValue);
+    dispatch(filterDogs("rerender", newCreatedValue));
   };
 
   const filterHandler = ({ target: { value } }) => {

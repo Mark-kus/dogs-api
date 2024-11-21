@@ -1,3 +1,6 @@
+import React, { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+
 import styles from "./Wraper.module.css";
 
 import Card from "../Card/Card";
@@ -7,6 +10,10 @@ import pagination from "../../Redux/actions/dogs/pagination";
 import Loader from "../Loader/Loader";
 
 import { useAppDispatch, useAppSelector } from "../../Redux/hooks.js";
+
+import getAllDogs from "../../Redux/actions/dogs/getAllDogs";
+import getAllTemps from "../../Redux/actions/temperaments/getAllTemps";
+import toggleFetching from "../../Redux/actions/dogs/toggleFetching";
 
 function Pagination({
   startHandler,
@@ -50,7 +57,27 @@ export default function Wraper() {
   const itemsPerPage = useAppSelector((state) => state.itemsPerPage);
   const dogsQty = useAppSelector((state) => state.dogsQty);
   const fetching = useAppSelector((state) => state.fetching);
+  const allDogs = useAppSelector((state) => state.allDogs);
+  const allTemps = useAppSelector((state) => state.allTemps);
+
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!allDogs.length) {
+      if (!fetching) dispatch(toggleFetching());
+      dispatch(getAllDogs()).catch((e) => {
+        if (e.response.status === 400) navigate("/error");
+      });
+    }
+    if (!allTemps.length) {
+      dispatch(getAllTemps());
+    }
+
+    if (allDogs.length && allTemps.length && fetching) {
+      dispatch(toggleFetching());
+    }
+  }, [dispatch, allDogs.length, allTemps.length, navigate]);
 
   // Página inicial
   const startHandler = () => {

@@ -22,11 +22,11 @@ server.use((req, res, next) => {            // Esto debe ser reemplazado por * p
 });
 
 server.use('/api', routes);
-server.use(express.static(path.join(__dirname, '../../', 'client/build')))
+server.use(express.static(path.join(__dirname, '../../', 'client/dist')))
 
 // Para que sirva la build al recargar una ruta
 server.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, '../../', 'client/build', 'index.html'));
+  res.sendFile(path.join(__dirname, '../../', 'client/dist', 'index.html'));
 });
 
 // Error catching endware.

@@ -1,9 +1,10 @@
-import { useNavigate } from "react-router-dom";
-import getAllDogs from "../../Redux/actions/dogs/getAllDogs";
+import React, { useState } from "react";
 import { useAppDispatch } from "../../Redux/hooks";
-import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import styles from "./Error.module.css";
+import getAllDogs from "../../Redux/actions/dogs/getAllDogs";
 
-export default function Error() {
+const Error = ({ errorMessage = "Something went wrong. Please try again later." }) => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const [rebooting, setRebooting] = useState(false);
@@ -14,17 +15,26 @@ export default function Error() {
       .then(() => {
         navigate("/");
       })
-      .catch((e) => {
+      .catch(() => {
         setRebooting(false);
       });
   };
 
   return (
-    <article>
-      <h1>Error Ocurred</h1>
-      <button disabled={rebooting} onClick={handleReboot}>
-        {rebooting ? "Trying again" : "Try again"}
-      </button>
-    </article>
+    <div className={styles.container}>
+      <h1 className={styles.title}>Oops!</h1>
+      <p className={styles.message}>{errorMessage}</p>
+      <div className={styles.actions}>
+        <button
+          className={`${styles.button} ${rebooting ? styles.disabled : ""}`}
+          onClick={handleReboot}
+          disabled={rebooting}
+        >
+          {rebooting ? "Rebooting..." : "Try Again"}
+        </button>
+      </div>
+    </div>
   );
-}
+};
+
+export default Error;

@@ -2,15 +2,20 @@ import styles from "./Detail.module.css";
 import Loader from "../Loader/Loader";
 import deleteDog from "../../Redux/actions/dogs/deleteDog";
 
-import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
+import { useEffect } from "react";
+import toggleFetching from "../../Redux/actions/dogs/toggleFetching";
+import getDogById from "../../Redux/actions/dogs/getDogById";
+import { useAppDispatch, useAppSelector } from "../../Redux/hooks";
 
 export default function Detail() {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
-  const detailDog = useSelector((state) => state.detailDog);
-  const [load, setLoad] = useState(false);
+  const dispatch = useAppDispatch();
+  const detailDog = useAppSelector((state) => state.detailDog);
+  const fetching = useAppSelector((state) => state.fetching);
+
+  const { pathname } = location;
+  const id = pathname.slice(6);
 
   const [minWeight, maxWeight] = detailDog.weight
     ? detailDog.weight.split(" - ")
@@ -23,8 +28,21 @@ export default function Detail() {
     : ["", ""];
 
   useEffect(() => {
-    if (detailDog.id) setLoad(true);
-  }, [detailDog]);
+    if (!id) {
+      navigate("/error");
+      return;
+    }
+
+    if (String(detailDog.id) !== String(id)) {
+      dispatch(getDogById(id))
+        .catch((e) => {
+          if (e.response.status === 400) navigate("/error");
+        })
+        .finally(() => {
+          dispatch(toggleFetching());
+        });
+    }
+  }, [id, dispatch, detailDog.id]);
 
   const deleteCard = () => {
     dispatch(deleteDog(detailDog.id));
@@ -33,7 +51,7 @@ export default function Detail() {
 
   return (
     <>
-      {load ? (
+      {fetching ? (
         <section className={styles.detail}>
           <div className={styles.buttons}>
             <Link to="/dogs" className={styles.button}>
@@ -67,14 +85,14 @@ export default function Detail() {
             <div className={styles.bottomData}>
               <p>
                 Height
-                <div>
+                <span>
                   <span>{minHeight} cm</span>
                   {maxHeight && <span> - {maxHeight} cm</span>}
-                </div>
+                </span>
               </p>
               <p>
                 Life span
-                <div>
+                <span>
                   <span>
                     {minLifeSpan}
                     {minLifeSpan.includes("years") ? "" : " years"}
@@ -86,15 +104,15 @@ export default function Detail() {
                       {maxLifeSpan.includes("years") ? "" : " years"}
                     </span>
                   )}
-                </div>
+                </span>
               </p>
               <p>
                 Weight
                 {Boolean(minWeight) && Boolean(maxWeight) ? (
-                  <div>
+                  <span>
                     <span>{minWeight} kg</span>
                     {maxWeight && <span> - {maxWeight} kg</span>}
-                  </div>
+                  </span>
                 ) : (
                   "Not specified"
                 )}

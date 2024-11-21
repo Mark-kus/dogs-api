@@ -47,6 +47,10 @@
 .bottomData {
   display: flex;
   justify-content: space-evenly;
+
+  @media screen and (max-width: 1024px) {
+    flex-direction: column;
+  }
 }
 
 .bottomData p {
@@ -62,7 +66,7 @@
   margin-bottom: 16px;
   gap: 8px;
   color: var(--white-text);
-  transition: background 200ms ease;
+  transition: background-color 200ms ease;
   gap: 16px;
 }
 
@@ -77,7 +81,7 @@
   font-weight: bold;
   font-size: medium;
   color: var(--white-text);
-  transition: background 200ms ease;
+  transition: background-color 200ms ease;
 
   &:hover {
     background-color: #963515;

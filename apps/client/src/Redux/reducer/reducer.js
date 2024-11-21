@@ -21,6 +21,7 @@ const initialState = {
   createdDogs: [],
   detailDog: {},
   searchDogs: [],
+  currentFilter: "Show all",
   currentPage: 1,
   itemsPerPage: 8,
   dogsQty: 0,
@@ -116,9 +117,19 @@ export default function reducer(state = initialState, action) {
       // Si created es false, mostrar creados y no creados
       if (!created) {
         // Si filter es "show all" o "rerender", mostrar todos
-        if (filter === "Show all" || filter === "rerender") {
+        if (filter === "Show all") {
           updatedDogs = state.allDogs;
         }
+
+        // Si filter es "rerender", mostrar el filtro actual
+        else if (filter === "rerender") {
+          updatedDogs = state.allDogs.filter((dog) =>
+            dog.temperament
+              ? dog.temperament.includes(state.currentFilter)
+              : false
+          );
+        }
+
         // Si filter es cualquier otra cosa, mostrar todos los que incluyan el filtro
         else {
           updatedDogs = [...state.allDogs].filter((dog) => {
@@ -128,7 +139,7 @@ export default function reducer(state = initialState, action) {
           });
         }
       }
-      // Si created no es false, mostrar creados
+      // Si created es true, mostrar creados
       else {
         // Si filter es "show all", mostrar todos los creados
         if (filter === "Show all") {
@@ -155,6 +166,7 @@ export default function reducer(state = initialState, action) {
         currentPage: 1,
         dogsQty: updatedDogs.length,
         detailDog: {},
+        currentFilter: filter !== "rerender" ? filter : state.currentFilter,
       };
 
     case ORDER_DOGS:

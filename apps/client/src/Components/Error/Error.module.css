@@ -1,0 +1,47 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    text-align: center;
+    background-color: #f8d7da;
+    color: #721c24;
+  }
+  
+  .title {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+  }
+  
+  .message {
+    font-size: 1.2rem;
+    margin-bottom: 2rem;
+  }
+  
+  .actions {
+    display: flex;
+    gap: 1rem;
+  }
+  
+  .button {
+    padding: 10px 20px;
+    font-size: 1rem;
+    border-radius: 5px;
+    cursor: pointer;
+    border: none;
+    background-color: #f5c6cb;
+    color: #721c24;
+    transition: background-color 0.3s ease;
+  }
+  
+  .button:hover {
+    background-color: #f1b0b7;
+  }
+  
+  .button:disabled,
+  .button.disabled {
+    background-color: #f8d7da;
+    cursor: not-allowed;
+  }
+  
